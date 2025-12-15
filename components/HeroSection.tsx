@@ -1,408 +1,84 @@
 "use client";
+import { animationData } from "@/data/animationData";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
+import Image from "next/image";
 export default function HeroSection() {
-  const animationData = {
-    v: "5.5.8",
-    fr: 29.9700012207031,
-    ip: 0,
-    op: 219.000008920053,
-    w: 500,
-    h: 500,
-    nm: "Comp 1",
-    ddd: 0,
-    assets: [
-      {
-        id: "comp_0",
-        layers: [
-          {
-            ddd: 0,
-            ind: 1,
-            ty: 4,
-            nm: "Shape Layer 2",
-            sr: 1,
-            ks: {
-              o: { a: 0, k: 100, ix: 11 },
-              r: { a: 0, k: 0, ix: 10 },
-              p: { a: 0, k: [1040, 250, 0], ix: 2 },
-              a: { a: 0, k: [0, 0, 0], ix: 1 },
-              s: { a: 0, k: [100, 100, 100], ix: 6 },
-            },
-            ao: 0,
-            shapes: [
-              {
-                ty: "gr",
-                it: [
-                  {
-                    ind: 0,
-                    ty: "sh",
-                    ix: 1,
-                    ks: {
-                      a: 0,
-                      k: {
-                        i: [
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [-5.667, -29.333],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                        ],
-                        o: [
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                          [0, 0],
-                        ],
-                        v: [
-                          [-1032, 24],
-                          [-952, 24],
-                          [-929, -63],
-                          [-912, 25],
-                          [-881, 25],
-                          [-856, -130],
-                          [-822, 119],
-                          [-811, 18],
-                          [-762, 18],
-                          [-746, -78],
-                          [-722, 16],
-                          [-637, 16],
-                          [-614, 114],
-                          [-598, 18],
-                          [-498, 18],
-                        ],
-                        c: false,
-                      },
-                      ix: 2,
-                    },
-                    nm: "Path 1",
-                    mn: "ADBE Vector Shape - Group",
-                    hd: false,
-                  },
-                  {
-                    ty: "st",
-                    c: { a: 0, k: [0.3137, 0.7569, 0.3294, 1], ix: 3 },
-                    o: { a: 0, k: 100, ix: 4 },
-                    w: { a: 0, k: 10, ix: 5 },
-                    lc: 2,
-                    lj: 2,
-                    bm: 0,
-                    nm: "Stroke 1",
-                    mn: "ADBE Vector Graphic - Stroke",
-                    hd: false,
-                  },
-                  {
-                    ty: "tr",
-                    p: { a: 0, k: [0, 0], ix: 2 },
-                    a: { a: 0, k: [0, 0], ix: 1 },
-                    s: { a: 0, k: [100, 100], ix: 3 },
-                    r: { a: 0, k: 0, ix: 6 },
-                    o: { a: 0, k: 100, ix: 7 },
-                    sk: { a: 0, k: 0, ix: 4 },
-                    sa: { a: 0, k: 0, ix: 5 },
-                    nm: "Transform",
-                  },
-                ],
-                nm: "Shape 1",
-                np: 3,
-                cix: 2,
-                bm: 0,
-                ix: 1,
-                mn: "ADBE Vector Group",
-                hd: false,
-              },
-              {
-                ty: "tm",
-                s: {
-                  a: 1,
-                  k: [
-                    {
-                      i: { x: [0.667], y: [1] },
-                      o: { x: [0.167], y: [0.167] },
-                      t: 52,
-                      s: [0],
-                    },
-                    { t: 174.000007087165, s: [100] },
-                  ],
-                  ix: 1,
-                },
-                e: {
-                  a: 1,
-                  k: [
-                    {
-                      i: { x: [0.667], y: [1] },
-                      o: { x: [0.167], y: [0.167] },
-                      t: 2,
-                      s: [0],
-                    },
-                    { t: 127.000005172816, s: [100] },
-                  ],
-                  ix: 2,
-                },
-                o: { a: 0, k: 0, ix: 3 },
-                m: 1,
-                ix: 2,
-                nm: "Trim Paths 1",
-                mn: "ADBE Vector Filter - Trim",
-                hd: false,
-              },
-            ],
-            ip: 0,
-            op: 180.00000733155,
-            st: 0,
-            bm: 0,
-          },
-        ],
-      },
-    ],
-    layers: [
-      {
-        ddd: 0,
-        ind: 1,
-        ty: 0,
-        nm: "Beat1",
-        refId: "comp_0",
-        sr: 1,
-        ks: {
-          o: { a: 0, k: 100, ix: 11 },
-          r: { a: 0, k: 0, ix: 10 },
-          p: { a: 0, k: [992, 250, 0], ix: 2 },
-          a: { a: 0, k: [1000, 250, 0], ix: 1 },
-          s: { a: 0, k: [100, 100, 100], ix: 6 },
-        },
-        ao: 0,
-        w: 2000,
-        h: 500,
-        ip: 213.000008675668,
-        op: 386.000015722102,
-        st: 206.000008390552,
-        bm: 0,
-      },
-      {
-        ddd: 0,
-        ind: 2,
-        ty: 0,
-        nm: "Beat1",
-        refId: "comp_0",
-        sr: 1,
-        ks: {
-          o: { a: 0, k: 100, ix: 11 },
-          r: { a: 0, k: 0, ix: 10 },
-          p: { a: 0, k: [992, 250, 0], ix: 2 },
-          a: { a: 0, k: [1000, 250, 0], ix: 1 },
-          s: { a: 0, k: [100, 100, 100], ix: 6 },
-        },
-        ao: 0,
-        w: 2000,
-        h: 500,
-        ip: 98.0000039916218,
-        op: 278.000011323172,
-        st: 98.0000039916218,
-        bm: 0,
-      },
-      {
-        ddd: 0,
-        ind: 3,
-        ty: 0,
-        nm: "Beat1",
-        refId: "comp_0",
-        sr: 1,
-        ks: {
-          o: { a: 0, k: 100, ix: 11 },
-          r: { a: 0, k: 0, ix: 10 },
-          p: { a: 0, k: [992, 250, 0], ix: 2 },
-          a: { a: 0, k: [1000, 250, 0], ix: 1 },
-          s: { a: 0, k: [100, 100, 100], ix: 6 },
-        },
-        ao: 0,
-        w: 2000,
-        h: 500,
-        ip: -2.00000008146167,
-        op: 166.000006761319,
-        st: -14.0000005702317,
-        bm: 0,
-      },
-      {
-        ddd: 0,
-        ind: 4,
-        ty: 4,
-        nm: "Shape Layer 2",
-        sr: 1,
-        ks: {
-          o: { a: 0, k: 100, ix: 11 },
-          r: { a: 0, k: 0, ix: 10 },
-          p: { a: 0, k: [1033, 250, 0], ix: 2 },
-          a: { a: 0, k: [0, 0, 0], ix: 1 },
-          s: { a: 0, k: [100, 100, 100], ix: 6 },
-        },
-        ao: 0,
-        shapes: [
-          {
-            ty: "gr",
-            it: [
-              {
-                ind: 0,
-                ty: "sh",
-                ix: 1,
-                ks: {
-                  a: 0,
-                  k: {
-                    i: [
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [-5.667, -29.333],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                    ],
-                    o: [
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                    ],
-                    v: [
-                      [-1035, 24],
-                      [-952, 24],
-                      [-929, -63],
-                      [-912, 25],
-                      [-881, 25],
-                      [-856, -130],
-                      [-822, 119],
-                      [-811, 18],
-                      [-762, 18],
-                      [-746, -78],
-                      [-722, 16],
-                      [-637, 16],
-                      [-614, 114],
-                      [-598, 18],
-                      [-498, 18],
-                    ],
-                    c: false,
-                  },
-                  ix: 2,
-                },
-                nm: "Path 1",
-                mn: "ADBE Vector Shape - Group",
-                hd: false,
-              },
-              {
-                ty: "st",
-                c: { a: 0, k: [0.3137, 0.7569, 0.3294, 1], ix: 3 },
-                o: { a: 0, k: 30, ix: 4 },
-                w: { a: 0, k: 10, ix: 5 },
-                lc: 2,
-                lj: 2,
-                bm: 0,
-                nm: "Stroke 1",
-                mn: "ADBE Vector Graphic - Stroke",
-                hd: false,
-              },
-              {
-                ty: "tr",
-                p: { a: 0, k: [0, 0], ix: 2 },
-                a: { a: 0, k: [0, 0], ix: 1 },
-                s: { a: 0, k: [100, 100], ix: 3 },
-                r: { a: 0, k: 0, ix: 6 },
-                o: { a: 0, k: 100, ix: 7 },
-                sk: { a: 0, k: 0, ix: 4 },
-                sa: { a: 0, k: 0, ix: 5 },
-                nm: "Transform",
-              },
-            ],
-            nm: "Shape 1",
-            np: 3,
-            cix: 2,
-            bm: 0,
-            ix: 1,
-            mn: "ADBE Vector Group",
-            hd: false,
-          },
-        ],
-        ip: 0,
-        op: 385.000015681371,
-        st: 0,
-        bm: 0,
-      },
-    ],
-    markers: [],
-  };
+  const stats = [
+    { value: "50k+", label: "Happy Patients" },
+    { value: "350+", label: "Specialist Doctors" },
+    { value: "98%", label: "Success Rate" },
+  ];
 
   return (
-    <div className="w-full bg-linear-to-r from-green-500 to-purple-400 py-20">
-      <div className="container h-100 mx-auto px-4 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
-          className="text-7xl font-bold text-white mb-4"
-        >
-          Rhythm Medical International
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
-          className="text-xl text-white"
-        >
-          Leading the Future of Medical Technology and Healthcare Solutions
-        </motion.p>
+    <section className="w-full bg-green-50 py-10 md:py-20">
+      <div className="w-full max-w-7xl mx-auto">
+        <div className="relative flex flex-col-reverse lg:flex-row items-center gap-10">
+          {/* Left: Text */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.0, ease: "easeInOut" }}
+            className="w-full lg:w-7/12 relative p-4 md:p-0 flex flex-col items-start"
+          >
+            <h2 className="text-5xl md:text-7xl font-extrabold text-green-700 leading-tight font-poppins">
+              Rhythm Medical International
+            </h2>
 
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
-          className="bg-white text-green-500 font-bold py-2 px-4 rounded mt-8 cursor-pointer"
-        >
-          Get Started
-        </motion.button>
+            <p className="mt-4 text-lg text-slate-600 max-w-2xl">
+              Leading the Future of Medical Technology and Healthcare Solutions
+            </p>
 
-        <Lottie
-          animationData={animationData}
-          loop={true}
-          className="absolute top-50 left-0 right-0 m-auto w-full h-100 mt-10 pointer-events-none"
-        />
+            <div className="mt-8 flex flex-wrap gap-4">
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, ease: "easeInOut" }}
+                className="bg-green-600 text-white font-bold py-2 px-4 rounded mt-8 cursor-pointer"
+              >
+                Get Started
+              </motion.button>
+            </div>
+
+            <div className="mt-10 flex gap-8 items-end">
+              {stats.map((s) => (
+                <div key={s.label} className="text-left">
+                  <div className="text-2xl lg:text-3xl font-bold text-green-600">
+                    {s.value}
+                  </div>
+                  <div className="text-sm text-slate-500">{s.label}</div>
+                </div>
+              ))}
+            </div>
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoPlay
+              className="w-full h-full max-h-120 absolute mt-8 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none"
+            />
+          </motion.div>
+
+          {/* Right: Card with doctor image and socials */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.0, ease: "easeInOut" }}
+            className="w-full md:w-6/12 p-4 md:p-0 flex justify-center items-center"
+          >
+            <div className="relative">
+              <div className="w-full max-w-150 max-h-130 bg-white rounded-3xl shadow-2xl overflow-hidden flex items-center justify-center">
+                <Image
+                  src="/hero-image.png"
+                  alt="doctor"
+                  width={600}
+                  height={600}
+                  className="object-cover "
+                />
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

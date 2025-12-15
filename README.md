@@ -2,35 +2,414 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+```js
+"use client";
+import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+export default function HeroSection() {
+  const animationData = {
+    v: "5.5.8",
+    fr: 29.9700012207031,
+    ip: 0,
+    op: 219.000008920053,
+    w: 500,
+    h: 500,
+    nm: "Comp 1",
+    ddd: 0,
+    assets: [
+      {
+        id: "comp_0",
+        layers: [
+          {
+            ddd: 0,
+            ind: 1,
+            ty: 4,
+            nm: "Shape Layer 2",
+            sr: 1,
+            ks: {
+              o: { a: 0, k: 100, ix: 11 },
+              r: { a: 0, k: 0, ix: 10 },
+              p: { a: 0, k: [1040, 250, 0], ix: 2 },
+              a: { a: 0, k: [0, 0, 0], ix: 1 },
+              s: { a: 0, k: [100, 100, 100], ix: 6 },
+            },
+            ao: 0,
+            shapes: [
+              {
+                ty: "gr",
+                it: [
+                  {
+                    ind: 0,
+                    ty: "sh",
+                    ix: 1,
+                    ks: {
+                      a: 0,
+                      k: {
+                        i: [
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [-5.667, -29.333],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                        ],
+                        o: [
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                          [0, 0],
+                        ],
+                        v: [
+                          [-1032, 24],
+                          [-952, 24],
+                          [-929, -63],
+                          [-912, 25],
+                          [-881, 25],
+                          [-856, -130],
+                          [-822, 119],
+                          [-811, 18],
+                          [-762, 18],
+                          [-746, -78],
+                          [-722, 16],
+                          [-637, 16],
+                          [-614, 114],
+                          [-598, 18],
+                          [-498, 18],
+                        ],
+                        c: false,
+                      },
+                      ix: 2,
+                    },
+                    nm: "Path 1",
+                    mn: "ADBE Vector Shape - Group",
+                    hd: false,
+                  },
+                  {
+                    ty: "st",
+                    c: { a: 0, k: [0.3137, 0.7569, 0.3294, 1], ix: 3 },
+                    o: { a: 0, k: 100, ix: 4 },
+                    w: { a: 0, k: 10, ix: 5 },
+                    lc: 2,
+                    lj: 2,
+                    bm: 0,
+                    nm: "Stroke 1",
+                    mn: "ADBE Vector Graphic - Stroke",
+                    hd: false,
+                  },
+                  {
+                    ty: "tr",
+                    p: { a: 0, k: [0, 0], ix: 2 },
+                    a: { a: 0, k: [0, 0], ix: 1 },
+                    s: { a: 0, k: [100, 100], ix: 3 },
+                    r: { a: 0, k: 0, ix: 6 },
+                    o: { a: 0, k: 100, ix: 7 },
+                    sk: { a: 0, k: 0, ix: 4 },
+                    sa: { a: 0, k: 0, ix: 5 },
+                    nm: "Transform",
+                  },
+                ],
+                nm: "Shape 1",
+                np: 3,
+                cix: 2,
+                bm: 0,
+                ix: 1,
+                mn: "ADBE Vector Group",
+                hd: false,
+              },
+              {
+                ty: "tm",
+                s: {
+                  a: 1,
+                  k: [
+                    {
+                      i: { x: [0.667], y: [1] },
+                      o: { x: [0.167], y: [0.167] },
+                      t: 52,
+                      s: [0],
+                    },
+                    { t: 174.000007087165, s: [100] },
+                  ],
+                  ix: 1,
+                },
+                e: {
+                  a: 1,
+                  k: [
+                    {
+                      i: { x: [0.667], y: [1] },
+                      o: { x: [0.167], y: [0.167] },
+                      t: 2,
+                      s: [0],
+                    },
+                    { t: 127.000005172816, s: [100] },
+                  ],
+                  ix: 2,
+                },
+                o: { a: 0, k: 0, ix: 3 },
+                m: 1,
+                ix: 2,
+                nm: "Trim Paths 1",
+                mn: "ADBE Vector Filter - Trim",
+                hd: false,
+              },
+            ],
+            ip: 0,
+            op: 180.00000733155,
+            st: 0,
+            bm: 0,
+          },
+        ],
+      },
+    ],
+    layers: [
+      {
+        ddd: 0,
+        ind: 1,
+        ty: 0,
+        nm: "Beat1",
+        refId: "comp_0",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100, ix: 11 },
+          r: { a: 0, k: 0, ix: 10 },
+          p: { a: 0, k: [992, 250, 0], ix: 2 },
+          a: { a: 0, k: [1000, 250, 0], ix: 1 },
+          s: { a: 0, k: [100, 100, 100], ix: 6 },
+        },
+        ao: 0,
+        w: 2000,
+        h: 500,
+        ip: 213.000008675668,
+        op: 386.000015722102,
+        st: 206.000008390552,
+        bm: 0,
+      },
+      {
+        ddd: 0,
+        ind: 2,
+        ty: 0,
+        nm: "Beat1",
+        refId: "comp_0",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100, ix: 11 },
+          r: { a: 0, k: 0, ix: 10 },
+          p: { a: 0, k: [992, 250, 0], ix: 2 },
+          a: { a: 0, k: [1000, 250, 0], ix: 1 },
+          s: { a: 0, k: [100, 100, 100], ix: 6 },
+        },
+        ao: 0,
+        w: 2000,
+        h: 500,
+        ip: 98.0000039916218,
+        op: 278.000011323172,
+        st: 98.0000039916218,
+        bm: 0,
+      },
+      {
+        ddd: 0,
+        ind: 3,
+        ty: 0,
+        nm: "Beat1",
+        refId: "comp_0",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100, ix: 11 },
+          r: { a: 0, k: 0, ix: 10 },
+          p: { a: 0, k: [992, 250, 0], ix: 2 },
+          a: { a: 0, k: [1000, 250, 0], ix: 1 },
+          s: { a: 0, k: [100, 100, 100], ix: 6 },
+        },
+        ao: 0,
+        w: 2000,
+        h: 500,
+        ip: -2.00000008146167,
+        op: 166.000006761319,
+        st: -14.0000005702317,
+        bm: 0,
+      },
+      {
+        ddd: 0,
+        ind: 4,
+        ty: 4,
+        nm: "Shape Layer 2",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100, ix: 11 },
+          r: { a: 0, k: 0, ix: 10 },
+          p: { a: 0, k: [1033, 250, 0], ix: 2 },
+          a: { a: 0, k: [0, 0, 0], ix: 1 },
+          s: { a: 0, k: [100, 100, 100], ix: 6 },
+        },
+        ao: 0,
+        shapes: [
+          {
+            ty: "gr",
+            it: [
+              {
+                ind: 0,
+                ty: "sh",
+                ix: 1,
+                ks: {
+                  a: 0,
+                  k: {
+                    i: [
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [-5.667, -29.333],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                    ],
+                    o: [
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                    ],
+                    v: [
+                      [-1035, 24],
+                      [-952, 24],
+                      [-929, -63],
+                      [-912, 25],
+                      [-881, 25],
+                      [-856, -130],
+                      [-822, 119],
+                      [-811, 18],
+                      [-762, 18],
+                      [-746, -78],
+                      [-722, 16],
+                      [-637, 16],
+                      [-614, 114],
+                      [-598, 18],
+                      [-498, 18],
+                    ],
+                    c: false,
+                  },
+                  ix: 2,
+                },
+                nm: "Path 1",
+                mn: "ADBE Vector Shape - Group",
+                hd: false,
+              },
+              {
+                ty: "st",
+                c: { a: 0, k: [0.3137, 0.7569, 0.3294, 1], ix: 3 },
+                o: { a: 0, k: 30, ix: 4 },
+                w: { a: 0, k: 10, ix: 5 },
+                lc: 2,
+                lj: 2,
+                bm: 0,
+                nm: "Stroke 1",
+                mn: "ADBE Vector Graphic - Stroke",
+                hd: false,
+              },
+              {
+                ty: "tr",
+                p: { a: 0, k: [0, 0], ix: 2 },
+                a: { a: 0, k: [0, 0], ix: 1 },
+                s: { a: 0, k: [100, 100], ix: 3 },
+                r: { a: 0, k: 0, ix: 6 },
+                o: { a: 0, k: 100, ix: 7 },
+                sk: { a: 0, k: 0, ix: 4 },
+                sa: { a: 0, k: 0, ix: 5 },
+                nm: "Transform",
+              },
+            ],
+            nm: "Shape 1",
+            np: 3,
+            cix: 2,
+            bm: 0,
+            ix: 1,
+            mn: "ADBE Vector Group",
+            hd: false,
+          },
+        ],
+        ip: 0,
+        op: 385.000015681371,
+        st: 0,
+        bm: 0,
+      },
+    ],
+    markers: [],
+  };
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  return (
+    <div className="w-full bg-linear-to-r from-green-500 to-purple-400 py-20">
+      <div className="container h-100 mx-auto px-4 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          className="text-7xl font-bold text-white mb-4"
+        >
+          Rhythm Medical International
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          className="text-xl text-white"
+        >
+          Leading the Future of Medical Technology and Healthcare Solutions
+        </motion.p>
+
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          className="bg-white text-green-500 font-bold py-2 px-4 rounded mt-8 cursor-pointer"
+        >
+          Get Started
+        </motion.button>
+
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          className="absolute top-50 left-0 right-0 m-auto w-full h-100 mt-10 pointer-events-none"
+        />
+      </div>
+    </div>
+  );
+}
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

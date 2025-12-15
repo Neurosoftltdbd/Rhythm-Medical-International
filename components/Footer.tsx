@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="w-full py-8 px-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-      <div className="flex justify-between max-w-7xl mx-auto mb-4 gap-16">
+      <div className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto mb-4 gap-16">
         <div className="w-1/3">
           <h3 className="text-xl ">About</h3>
           <hr className="mb-4" />
