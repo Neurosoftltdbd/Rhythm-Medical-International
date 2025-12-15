@@ -10,7 +10,7 @@ export default function ContactForm() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (!messages.name) {
       toast.error("Name is required");
@@ -23,7 +23,7 @@ export default function ContactForm() {
     } else {
       toast.success("Message sent successfully!");
       console.log("Submitted Message:", messages);
-      
+
       setMessages({
         name: "",
         phone: "",
@@ -92,6 +92,8 @@ export default function ContactForm() {
         />
       </div>
       <button
+        type="submit"
+        name="submit"
         onClick={handleSubmit}
         className="bg-green-700 text-white p-2 rounded cursor-pointer hover:bg-green-800 transition-all ease-in-out duration-500"
       >
