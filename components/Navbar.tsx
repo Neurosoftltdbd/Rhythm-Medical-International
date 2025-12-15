@@ -19,7 +19,7 @@ export default function Navbar() {
           >
             <Link className="flex items-center gap-4" href="/">
               <Image
-                src="/RMI-Logo.png"
+                src="/logo.png"
                 alt="RMI Logo"
                 width={150}
                 height={50}
