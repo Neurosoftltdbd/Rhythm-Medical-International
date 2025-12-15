@@ -1,6 +1,8 @@
+import AchivementSection from "@/components/AchivementSection";
 import HeroSection from "@/components/HeroSection";
 import MissionSection from "@/components/MissionSection";
-import TeamSection from "@/components/TeamSection";
+import OurTeamSection from "@/components/OurTeamSection";
+import TestimonialSection from "@/components/TestimonialSection";
 import VissionSection from "@/components/VissionSection";
 
 export default function Home() {
@@ -9,7 +11,9 @@ export default function Home() {
       <HeroSection />
       <MissionSection />
       <VissionSection />
-      <TeamSection />
+      <OurTeamSection />
+      <AchivementSection/>
+      <TestimonialSection/>
     </div>
   );
 }

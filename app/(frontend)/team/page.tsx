@@ -1,9 +1,10 @@
+import OurTeamSection from "@/components/OurTeamSection";
+
 export default function TeamPage() {
   return (
     <div className="w-full ">
-      <div className="w-full max-w-7xl mx-auto min-h-screen">
-        <h2 className="text-2xl font-bold mb-4 text-center my-8">Our Team</h2>
-        <div></div>
+      <div className="w-full mx-auto min-h-screen">
+        <OurTeamSection />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -9,13 +10,24 @@ export default function Navbar() {
     { title: "Contact", href: "/contact" },
   ];
   return (
-    <nav className="w-full flex items-center justify-between py-4 px-8 bg-green-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <nav className="w-full flex items-center justify-between p-4 bg-green-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto ">
-        <div
-          className="text-2xl font-bold text-gray-800 dark:text-white"
-          title="Leading the Future of Medical Technology and Healthcare Solutions"
-        >
-          Rhythm Medical International
+        <div className="text-2xl font-bold text-gray-800 dark:text-white">
+          <h2
+            className="flex items-center justify-center"
+            title="Leading the Future of Medical Technology and Healthcare Solutions"
+          >
+            <Link className="flex items-center gap-4" href="/">
+              <Image
+                src="/RMI-Logo.png"
+                alt="RMI Logo"
+                width={150}
+                height={50}
+                className="object-contain w-24 md:w-12"
+              />
+              <span>Rhythm Medical International</span>
+            </Link>
+          </h2>
         </div>
         <div className="space-x-4 hidden md:flex">
           {navigationBarItem.map((item, index) => (

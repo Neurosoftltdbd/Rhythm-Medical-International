@@ -1,13 +1,18 @@
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
 
-
-export default function FrontendLayout({children}: {children: React.ReactNode}) {
+export default function FrontendLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <main>{children}</main>
-      <Footer/>
+      <Footer />
+      <Toaster />
     </>
   );
 }

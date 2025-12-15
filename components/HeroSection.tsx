@@ -8,12 +8,13 @@ export default function HeroSection() {
     { value: "50k+", label: "Happy Patients" },
     { value: "350+", label: "Specialist Doctors" },
     { value: "98%", label: "Success Rate" },
+    { value: "15+ years", label: "Experience" },
   ];
 
   return (
     <section className="w-full bg-green-50 py-10 md:py-20">
       <div className="w-full max-w-7xl mx-auto">
-        <div className="relative flex flex-col-reverse lg:flex-row items-center gap-10">
+        <div className="relative flex flex-col-reverse md:flex-row items-center gap-10">
           {/* Left: Text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -34,7 +35,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: "easeInOut" }}
-                className="bg-green-600 text-white font-bold py-2 px-4 rounded mt-8 cursor-pointer"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded mt-8 cursor-pointer animate-bounce hover:animate-none "
               >
                 Get Started
               </motion.button>
