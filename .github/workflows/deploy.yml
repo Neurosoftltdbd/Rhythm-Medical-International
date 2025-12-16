@@ -1,229 +1,118 @@
-name: Deploy to Rhythm Medical cPanel
+name: Next.js Deploy to cPanel (Rhythm Medical)
 
 on:
   push:
     branches: [main, master]
+  # Allows you to trigger the workflow manually from the GitHub UI
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Define environment variables used throughout the job
+    env:
+      # --- Connection Details ---
+      CPANEL_HOST: 14.128.15.182
+      CPANEL_USER: rhythmme
+      CPANEL_PORT: 22
+      # --- Server Paths ---
+      APP_ROOT: /home/rhythmme/public_html
+      # CRITICAL: Replace '18' with your Node.js version if different (e.g., '20')
+      # Get this exact path from your cPanel "Setup Node.js App" page.
+      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/18/bin/activate
+      # --- Next.js Build Vars ---
+      NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
+
     steps:
-      - name: Checkout code
+      - name: 📦 Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js (Local Build)
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "18"
           cache: "npm"
 
-      - name: Install dependencies
+      - name: ⬇️ Install dependencies (Local Build)
         run: npm ci
 
-      - name: Build Next.js app
+      - name: 🔨 Build Next.js App (Local)
         run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
+          NEXT_PUBLIC_SITE_URL: ${{ env.NEXT_PUBLIC_SITE_URL }}
 
-      - name: Setup SSH Environment
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "StrictHostKeyChecking no" > ~/.ssh/config
-          ssh-keyscan -H 14.128.15.182 >> ~/.ssh/known_hosts
-
-      - name: Deploy via SCP
+      # ----------------------------------------------------------------------
+      # Step 1: Transfer all necessary files to the server
+      # ----------------------------------------------------------------------
+      - name: ⏫ Deploy Files via SCP
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: 14.128.15.182
-          username: rhythmme
+          host: ${{ env.CPANEL_HOST }}
+          username: ${{ env.CPANEL_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          port: ${{ env.CPANEL_PORT }}
+
+          # Transfer the current directory (which now contains .next, public, package.json, etc.)
           source: "."
-          target: "/home/rhythmme/public_html"
-          strip_components: 1
-          rm: false
-          overwrite: true
+          target: ${{ env.APP_ROOT }}
+
+          # Crucial: Prevent large directories or unnecessary files from being transferred
           exclude: |
             .git
             .github
-            .gitignore
-            node_modules
+            .vscode
+            node_modules  # NEVER upload this; install on the server
             *.md
             .env*
-            README.md
             .eslintrc.json
             .prettierrc
             .prettierignore
+          overwrite: true # Ensure new files replace old ones
 
-      - name: Deploy build artifacts separately
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: 14.128.15.182
-          username: rhythmme
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: ".next"
-          target: "/home/rhythmme/public_html"
-          strip_components: 1
-          overwrite: true
-
-      - name: Deploy public folder separately
-        if: exists('public')
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: 14.128.15.182
-          username: rhythmme
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "public"
-          target: "/home/rhythmme/public_html"
-          strip_components: 1
-          overwrite: true
-
-      - name: Install dependencies on server
+      # ----------------------------------------------------------------------
+      # Step 2: SSH into the server to run commands and restart
+      # ----------------------------------------------------------------------
+      - name: 🔄 Server Setup & Restart (cPanel VENV)
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: 14.128.15.182
-          username: rhythmme
+          host: ${{ env.CPANEL_HOST }}
+          username: ${{ env.CPANEL_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          port: ${{ env.CPANEL_PORT }}
           script: |
-            echo "🔧 Setting up Node.js environment..."
-            cd /home/rhythmme/public_html
+            echo "--- Activating cPanel Node.js Environment ---"
+            cd ${{ env.APP_ROOT }}
 
-            # Check Node.js version
-            echo "Node.js version: $(node --version 2>/dev/null || echo 'Not found')"
-            echo "npm version: $(npm --version 2>/dev/null || echo 'Not found')"
-
-            # Install production dependencies
-            if [ -f "package.json" ]; then
-              echo "Installing Node.js dependencies..."
-              npm install --only=production --no-audit --no-fund
-              echo "✅ Dependencies installed"
+            # Activate the specific cPanel Node.js virtual environment
+            if [ -f "${{ env.NODE_VENV_SCRIPT }}" ]; then
+              source "${{ env.NODE_VENV_SCRIPT }}"
             else
-              echo "❌ package.json not found!"
-              ls -la
+              echo "❌ ERROR: Node.js VENV script not found at ${{ env.NODE_VENV_SCRIPT }}"
+              echo "Please verify the 'NODE_VENV_SCRIPT' environment variable is correct."
               exit 1
             fi
 
-      - name: Setup PM2 and restart application
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: 14.128.15.182
-          username: rhythmme
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /home/rhythmme/public_html
+            echo "--- Installing Production Dependencies ---"
+            # Install only production dependencies for the Next.js runtime
+            npm install --only=production --no-audit --no-fund
+            echo "✅ Dependencies installed"
 
-            # Check if PM2 is installed, install if not
-            if ! command -v pm2 &> /dev/null; then
-              echo "Installing PM2 globally..."
-              npm install -g pm2
-              echo "✅ PM2 installed"
-            else
-              echo "✅ PM2 already installed: $(pm2 --version)"
-            fi
+            echo "--- Triggering cPanel Phusion Passenger Restart ---"
+            # This is the standard way to restart a cPanel-managed Node.js application
+            mkdir -p tmp
+            touch tmp/restart.txt
+            echo "✅ Application restart signaled. Deployment complete."
 
-            # Create PM2 ecosystem file
-            echo "Creating PM2 configuration..."
-            cat > ecosystem.config.js << 'EOF'
-            module.exports = {
-              apps: [{
-                name: 'rhythm-medical-nextjs',
-                script: 'node_modules/next/dist/bin/next',
-                args: 'start',
-                cwd: '/home/rhythmme/public_html',
-                instances: 1,
-                autorestart: true,
-                watch: false,
-                max_memory_restart: '500M',
-                env: {
-                  NODE_ENV: 'production',
-                  PORT: 3000
-                },
-                env_production: {
-                  NODE_ENV: 'production',
-                  PORT: 3000
-                },
-                error_file: '/home/rhythmme/.pm2/logs/rhythm-medical-error.log',
-                out_file: '/home/rhythmme/.pm2/logs/rhythm-medical-out.log',
-                time: true
-              }]
-            }
-            EOF
+            # Optional: Check PM2 status (if you still have it running from previous attempts)
+            pm2 delete rhythm-medical-nextjs 2>/dev/null || echo "PM2 instance not found, clean."
 
-            # Manage PM2 process
-            echo "Managing application process..."
-
-            # Check if process already exists
-            if pm2 describe rhythm-medical-nextjs &> /dev/null; then
-              echo "Restarting existing application..."
-              pm2 reload rhythm-medical-nextjs --update-env
-            else
-              echo "Starting new application..."
-              pm2 start ecosystem.config.js --env production
-            fi
-
-            # Save PM2 process list
-            pm2 save 2>/dev/null || echo "Note: PM2 save may require sudo for startup script"
-
-            echo "✅ Application started with PM2"
-
-      - name: Verify deployment
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: 14.128.15.182
-          username: rhythmme
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            echo "📊 Deployment Verification"
-            echo "========================="
-
-            # Check if files exist
-            echo ""
-            echo "1. Checking deployed files:"
-            ls -la /home/rhythmme/public_html/.next 2>/dev/null && echo "✅ .next directory exists" || echo "❌ .next directory missing"
-            ls -la /home/rhythmme/public_html/package.json 2>/dev/null && echo "✅ package.json exists" || echo "❌ package.json missing"
-
-            # Check PM2 status
-            echo ""
-            echo "2. Checking PM2 status:"
-            pm2 list | grep rhythm-medical-nextjs && echo "✅ Application is running" || echo "❌ Application not found in PM2"
-
-            # Check if process is running
-            echo ""
-            echo "3. Checking if process is active:"
-            if pgrep -f "next.*start" > /dev/null; then
-              echo "✅ Next.js process is running"
-              echo "   Process info:"
-              pgrep -f "next.*start" | xargs ps -fp 2>/dev/null | head -5
-            else
-              echo "⚠️  No Next.js process found"
-            fi
-
-            # Test port 3000
-            echo ""
-            echo "4. Testing application port:"
-            if curl -s -f -o /dev/null --max-time 10 http://localhost:3000; then
-              echo "✅ Application responding on port 3000"
-            else
-              echo "⚠️  Application not responding on port 3000"
-              echo "   Checking logs for errors..."
-              tail -10 /home/rhythmme/.pm2/logs/rhythm-medical-error.log 2>/dev/null || echo "   No error log found"
-            fi
-
-      - name: Deployment Summary
+      - name: ✨ Deployment Summary
         if: success()
         run: |
           echo "🎉 Deployment Successful!"
           echo "========================"
-          echo "🌐 Website: https://rhythmmedicalint.com"
+          echo "🌐 Website: ${{ env.NEXT_PUBLIC_SITE_URL }}"
           echo "📅 Time: $(date)"
           echo "🔄 Triggered by: ${{ github.event_name }}"
           echo "📝 Commit: ${{ github.event.head_commit.message || 'Manual trigger' }}"
