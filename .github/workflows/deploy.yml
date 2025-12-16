@@ -60,11 +60,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ env.CPANEL_PORT }}
 
-          # The rsync command to sync files from the current directory (.)
-          # to the remote APP_ROOT directory.
-          # -a: archive mode (preserves permissions, etc.)
-          # --delete: deletes files on the server that are NOT in the source
-          # --exclude: ignores specified patterns
           script: |
             rsync -avz --delete \
               --exclude='.git/' \
