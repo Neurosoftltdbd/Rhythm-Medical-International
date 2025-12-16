@@ -52,6 +52,27 @@ jobs:
       # ----------------------------------------------------------------------
       # Step 1: Transfer all necessary files using rsync over SSH
       # ----------------------------------------------------------------------
+      # - name: ⏫ Deploy Files via rsync over SSH
+      #   uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     host: ${{ env.CPANEL_HOST }}
+      #     username: ${{ env.CPANEL_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ env.CPANEL_PORT }}
+
+      #     script: |
+      #       rsync -avz --delete \
+      #         --exclude='.git/' \
+      #         --exclude='.github/' \
+      #         --exclude='node_modules/' \
+      #         --exclude='*.md' \
+      #         --exclude='.env*' \
+      #         --exclude='.eslintrc.json' \
+      #         --exclude='.prettierrc' \
+      #         --exclude='.prettierignore' \
+      #         ./ ${{ env.CPANEL_USER }}@${{ env.CPANEL_HOST }}:${{ env.APP_ROOT }}
+      #       echo "✅ Files synchronized using rsync."
+
       - name: ⏫ Deploy Files via rsync over SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -60,8 +81,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ env.CPANEL_PORT }}
 
+          # Use rsync over the established SSH tunnel to copy from the runner's current directory (./)
+          # to the remote directory ($APP_ROOT).
           script: |
-            rsync -avz --delete \
+            echo "--- Starting Rsync Transfer (Local to Remote) ---"
+
+            # The rsync command must run on the local machine (the runner)
+            rsync -avz --delete --verbose \
+              --rsh="ssh -p${{ env.CPANEL_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
               --exclude='.git/' \
               --exclude='.github/' \
               --exclude='node_modules/' \
@@ -71,7 +98,30 @@ jobs:
               --exclude='.prettierrc' \
               --exclude='.prettierignore' \
               ./ ${{ env.CPANEL_USER }}@${{ env.CPANEL_HOST }}:${{ env.APP_ROOT }}
-            echo "✅ Files synchronized using rsync."
+
+            # Check the exit code of rsync
+            if [ $? -eq 0 ]; then
+                echo "✅ Rsync transfer completed successfully."
+            else
+                echo "❌ Rsync transfer FAILED. Check permissions and paths."
+                exit 1
+            fi
+
+      - name: 🔎 Verify Files Exist on Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.CPANEL_HOST }}
+          username: ${{ env.CPANEL_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ env.CPANEL_PORT }}
+          script: |
+            echo "--- Verifying Files in Target Directory ---"
+            cd ${{ env.APP_ROOT }} || { echo "❌ ERROR: Target directory not found on server."; exit 1; }
+            echo "Current Directory: $(pwd)"
+            echo "Listing key files:"
+            ls -al package.json || echo "❌ package.json NOT FOUND"
+            ls -al .next || echo "❌ .next folder NOT FOUND"
+            echo "--- Verification Complete ---"
 
       - name: 🔎 Find Correct Node VENV Path
         uses: appleboy/ssh-action@v1.0.0
