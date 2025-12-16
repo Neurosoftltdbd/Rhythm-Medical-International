@@ -1,4 +1,4 @@
-name: Deploy to Rhythm Medical cPanel
+name: Deploy Next.js to cPanel
 
 on:
   push:
@@ -6,47 +6,48 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Next.js app
-        run: npm run build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
-
-      - name: Deploy via SFTP (using IP)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+          node-version: '18'
+          
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+          
+      - name: Method 1: Try SFTP First
+        id: sftp-deploy
+        uses: wangyucode/sftp-upload-action@v2.2.0
+        continue-on-error: true
         with:
-          server: 14.128.15.182 # Use the IP directly
+          host: 14.128.15.182
           username: ${{ secrets.CPANEL_USERNAME }}
           password: ${{ secrets.CPANEL_PASSWORD }}
-          port: 22 # SFTP over SSH
-          protocol: sftp
+          port: 22
+          localDir: '.'
+          remoteDir: '/home/rhythmme/public_html'
+          
+      - name: Method 2: Try FTP if SFTP fails
+        if: steps.sftp-deploy.outcome == 'failure'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: 14.128.15.182
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: 21
+          protocol: ftp
           local-dir: ./
           server-dir: /home/rhythmme/public_html/
-          exclude: |
-            **/.git*
-            **/.github*
-            **/.gitignore
-            **/.env*
-            **/node_modules
-            **/*.md
-          dangerous-clean-slate: false
-
-      - name: Post-deployment SSH setup
+          
+      - name: Post-deployment setup
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: 14.128.15.182
@@ -54,30 +55,7 @@ jobs:
           password: ${{ secrets.CPANEL_PASSWORD }}
           port: 22
           script: |
-            echo "🔧 Setting up Node.js environment..."
             cd /home/rhythmme/public_html
-
-            # Install production dependencies
-            if [ -f "package.json" ]; then
-              echo "Installing Node.js dependencies..."
-              npm install --only=production --no-audit
-            fi
-
-            # Check if app is running
-            echo "Checking current processes..."
-            if pgrep -f "node.*next" > /dev/null; then
-              echo "✅ Next.js app is already running"
-            else
-              echo "⚠️  Next.js app not running - manual start may be needed"
-              echo ""
-              echo "To start manually via SSH:"
-              echo "cd /home/rhythmme/public_html"
-              echo "npm install pm2 -g"
-              echo "pm2 start npm --name 'nextjs' -- start"
-            fi
-
-            echo ""
-            echo "📋 Summary:"
-            echo "Files deployed to: /home/rhythmme/public_html"
-            echo "Website: https://rhythmmedicalint.com"
-            echo "Server IP: 14.128.15.182"
+            echo "✅ Files deployed successfully"
+            echo "Path: $(pwd)"
+            ls -la | head -10
