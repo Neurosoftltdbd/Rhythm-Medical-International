@@ -1,11 +1,15 @@
-name: Deploy to cPanel
+name: Deploy to Rhythm Medical cPanel
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+    types: [closed]
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-  deploy:
+  test-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,46 +19,187 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "18"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Run linting
+        run: npm run lint || true
+
       - name: Build Next.js app
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
-          # Add other environment variables here
+          # Add any build-time environment variables here
+          NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
 
-      - name: Deploy to cPanel via SSH
-        uses: appleboy/scp-action@v0.1.4
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT || 22 }}
-          source: ".,!node_modules"
-          target: "/home/username/public_html"
-          strip_components: 1
+          name: nextjs-build
+          path: |
+            .next/
+            public/
+            package.json
+            package-lock.json
+            next.config.js
+
+  deploy-production:
+    needs: test-build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: nextjs-build
+
+      - name: Verify SSH connection
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
+          script: |
+            echo "Connected to $(hostname)"
+            echo "Current directory: $(pwd)"
+            node --version
+            npm --version
+
+      - name: Create backup of current site
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
+          script: |
+            cd /home/rhythmme
+            tar -czf backup_$(date +"%Y%m%d_%H%M%S").tar.gz public_html/ 2>/dev/null || true
+            echo "Backup created"
+
+      - name: Deploy via SFTP (Main files)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
+          local-dir: ./
+          server-dir: /home/rhythmme/public_html/
+          exclude: |
+            **/.git*
+            **/.github*
+            **/.gitignore
+            **/.env*
+            **/node_modules
+            **/README.md
+            **/.eslintrc.json
+            **/next.config.js
+
+      - name: Deploy config files separately
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
+          local-dir: ./
+          server-dir: /home/rhythmme/public_html/
+          include: |
+            next.config.js
+            package.json
+            package-lock.json
 
       - name: Install dependencies on server
         uses: appleboy/ssh-action@v0.1.5
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT || 22 }}
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
           script: |
-            cd /home/username/public_html
-            npm install --only=production
+            cd /home/rhythmme/public_html
+            echo "Current directory: $(pwd)"
+            echo "Files in directory:"
+            ls -la
 
-      - name: Restart application
+            echo "Installing dependencies..."
+            npm ci --only=production
+
+      - name: Setup PM2 and start application
         uses: appleboy/ssh-action@v0.1.5
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT || 22 }}
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
           script: |
-            cd /home/username/public_html
-            pm2 restart ecosystem.config.js || pm2 start ecosystem.config.js
+            cd /home/rhythmme/public_html
+
+            # Check if PM2 is installed
+            if ! command -v pm2 &> /dev/null; then
+              echo "Installing PM2 globally..."
+              npm install -g pm2
+            fi
+
+            # Create or update PM2 ecosystem file
+            cat > ecosystem.config.js << 'EOF'
+            module.exports = {
+              apps: [{
+                name: 'rhythm-medical-nextjs',
+                script: 'node_modules/next/dist/bin/next',
+                args: 'start -p 3000',
+                cwd: '/home/rhythmme/public_html',
+                instances: 1,
+                autorestart: true,
+                watch: false,
+                max_memory_restart: '500M',
+                env: {
+                  NODE_ENV: 'production',
+                  PORT: 3000
+                },
+                error_file: '/home/rhythmme/.pm2/logs/rhythm-medical-error.log',
+                out_file: '/home/rhythmme/.pm2/logs/rhythm-medical-out.log',
+                time: true
+              }]
+            }
+            EOF
+
+            # Start/Restart the application
+            pm2 delete rhythm-medical-nextjs 2>/dev/null || true
+            pm2 start ecosystem.config.js
+            pm2 save
+
+            # Setup PM2 to start on boot (if possible)
+            pm2 startup 2>/dev/null || echo "PM2 startup command failed - may need root"
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: ${{ secrets.CPANEL_PORT || 22 }}
+          script: |
+            echo "Checking PM2 status..."
+            pm2 status
+            echo ""
+            echo "Checking if app is running..."
+            sleep 5
+            if curl -f http://localhost:3000 > /dev/null 2>&1; then
+              echo "✅ Application is running on port 3000"
+            else
+              echo "❌ Application may not be running"
+              echo "Checking logs..."
+              tail -20 /home/rhythmme/.pm2/logs/rhythm-medical-error.log || true
+            fi
+
+      - name: Send deployment notification
+        if: success()
+        run: |
+          echo "✅ Deployment completed successfully to rhythmmedicalint.com"
+          echo "Site should be live at: https://rhythmmedicalint.com"

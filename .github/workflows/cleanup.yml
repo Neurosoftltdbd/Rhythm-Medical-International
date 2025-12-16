@@ -1,0 +1,13 @@
+name: Cleanup Old Artifacts
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup old artifacts
+        run: |
+          echo "Artifacts will be automatically cleaned up by GitHub after 90 days"
