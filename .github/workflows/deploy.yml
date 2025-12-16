@@ -18,7 +18,7 @@ jobs:
       # --- Server Paths ---
       APP_ROOT: /home/rhythmme/public_html
       # CRITICAL: Verify this path from cPanel's "Setup Node.js App" page.
-      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/20/bin/activate
+      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/nodevenv/public_html/20/bin/activate/20/bin/activate
       # --- Next.js Build Vars ---
       NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
 
