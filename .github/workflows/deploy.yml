@@ -3,25 +3,23 @@ name: Next.js Deploy to cPanel (Rhythm Medical)
 on:
   push:
     branches: [main, master]
-  # Allows manual triggering from the GitHub UI
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    # --- Centralized Environment Variables ---
+    # Define environment variables used throughout the job
     env:
-      # Connection Details
+      # --- Connection Details ---
       CPANEL_HOST: 14.128.15.182
       CPANEL_USER: rhythmme
       CPANEL_PORT: 22
-      # Server Paths
+      # --- Server Paths ---
       APP_ROOT: /home/rhythmme/public_html
-      # CRITICAL: REPLACE THIS PATH with the exact, verified Node VENV path from cPanel
-      # Example: /home/rhythmme/nodevenv/public_html/current/bin/activate
+      # CRITICAL: Verify this path from cPanel's "Setup Node.js App" page.
       NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/20/bin/activate
-      # Next.js Build Vars
+      # --- Next.js Build Vars ---
       NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
 
     steps:
@@ -44,14 +42,15 @@ jobs:
 
       - name: 🧹 Clean up Artifacts Before Transfer
         run: |
-          # Remove files that are unnecessary or can cause rsync/tar issues
+          # Cleanup is now even more important since rsync can be sensitive to files
+          # This removes files that can cause transfer issues or are unnecessary
           find . -name '.DS_Store' -delete
           find . -name '*~' -delete
           rm -rf node_modules
           echo "Cleanup complete."
 
       # ----------------------------------------------------------------------
-      # Step 1: Transfer files using rsync over SSH (Robust transfer method)
+      # Step 1: Transfer all necessary files using rsync over SSH
       # ----------------------------------------------------------------------
       - name: ⏫ Deploy Files via rsync over SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -61,7 +60,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ env.CPANEL_PORT }}
 
-          # rsync command for efficient, direct file synchronization
           script: |
             rsync -avz --delete \
               --exclude='.git/' \
@@ -75,8 +73,22 @@ jobs:
               ./ ${{ env.CPANEL_USER }}@${{ env.CPANEL_HOST }}:${{ env.APP_ROOT }}
             echo "✅ Files synchronized using rsync."
 
+      - name: 🔎 Find Correct Node VENV Path
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.CPANEL_HOST }}
+          username: ${{ env.CPANEL_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ env.CPANEL_PORT }}
+          script: |
+            echo "--- Scanning for 'activate' script in /home/${{ env.CPANEL_USER }}/nodevenv/ ---"
+            # This command recursively searches the common Node.js VENV location
+            find /home/${{ env.CPANEL_USER }}/nodevenv/ -name 'activate' 2>/dev/null
+            echo "--- Scan Complete ---"
+            echo "If the path is found, copy it and replace 'NODE_VENV_SCRIPT' in your YAML."
+
       # ----------------------------------------------------------------------
-      # Step 2: SSH into the server to install dependencies and restart Phusion Passenger
+      # Step 2: SSH into the server to run commands and restart
       # ----------------------------------------------------------------------
       - name: 🔄 Server Setup & Restart (cPanel VENV)
         uses: appleboy/ssh-action@v1.0.0
@@ -89,13 +101,12 @@ jobs:
             echo "--- Activating cPanel Node.js Environment ---"
             cd ${{ env.APP_ROOT }}
 
-            # --- VENV ACTIVATION (The critical step) ---
+            # Activate the specific cPanel Node.js virtual environment
             if [ -f "${{ env.NODE_VENV_SCRIPT }}" ]; then
               source "${{ env.NODE_VENV_SCRIPT }}"
-              echo "✅ VENV Activated (Node.js version: $(node -v))"
             else
               echo "❌ ERROR: Node.js VENV script not found at ${{ env.NODE_VENV_SCRIPT }}"
-              echo "!!! STOP: Please verify the 'NODE_VENV_SCRIPT' environment variable is correct. !!!"
+              echo "Please verify the 'NODE_VENV_SCRIPT' environment variable is correct."
               exit 1
             fi
 
@@ -104,21 +115,9 @@ jobs:
             echo "✅ Dependencies installed"
 
             echo "--- Triggering cPanel Phusion Passenger Restart ---"
-            # This triggers the cPanel process manager to load the new app
             mkdir -p tmp
             touch tmp/restart.txt
             echo "✅ Application restart signaled. Deployment complete."
 
-            # Clean up old PM2 process if lingering from previous attempts
+            # Optional cleanup from previous attempts
             pm2 delete rhythm-medical-nextjs 2>/dev/null || true
-
-      - name: ✨ Deployment Summary
-        if: success()
-        run: |
-          echo "🎉 Deployment Successful!"
-          echo "========================"
-          echo "🌐 Website: ${{ env.NEXT_PUBLIC_SITE_URL }}"
-          echo "📅 Time: $(date)"
-          echo "🔄 Triggered by: ${{ github.event_name }}"
-          echo "📝 Commit: ${{ github.event.head_commit.message || 'Manual trigger' }}"
-          echo "👤 By: ${{ github.event.head_commit.author.name || 'N/A' }}"
