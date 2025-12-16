@@ -3,23 +3,25 @@ name: Next.js Deploy to cPanel (Rhythm Medical)
 on:
   push:
     branches: [main, master]
+  # Allows manual triggering from the GitHub UI
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    # Define environment variables used throughout the job
+    # --- Centralized Environment Variables ---
     env:
-      # --- Connection Details ---
+      # Connection Details
       CPANEL_HOST: 14.128.15.182
       CPANEL_USER: rhythmme
       CPANEL_PORT: 22
-      # --- Server Paths ---
+      # Server Paths
       APP_ROOT: /home/rhythmme/public_html
-      # CRITICAL: Verify this path from cPanel's "Setup Node.js App" page.
+      # CRITICAL: REPLACE THIS PATH with the exact, verified Node VENV path from cPanel
+      # Example: /home/rhythmme/nodevenv/public_html/current/bin/activate
       NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/20/bin/activate
-      # --- Next.js Build Vars ---
+      # Next.js Build Vars
       NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
 
     steps:
@@ -42,15 +44,14 @@ jobs:
 
       - name: 🧹 Clean up Artifacts Before Transfer
         run: |
-          # Cleanup is now even more important since rsync can be sensitive to files
-          # This removes files that can cause transfer issues or are unnecessary
+          # Remove files that are unnecessary or can cause rsync/tar issues
           find . -name '.DS_Store' -delete
           find . -name '*~' -delete
           rm -rf node_modules
           echo "Cleanup complete."
 
       # ----------------------------------------------------------------------
-      # Step 1: Transfer all necessary files using rsync over SSH
+      # Step 1: Transfer files using rsync over SSH (Robust transfer method)
       # ----------------------------------------------------------------------
       - name: ⏫ Deploy Files via rsync over SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -60,6 +61,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ env.CPANEL_PORT }}
 
+          # rsync command for efficient, direct file synchronization
           script: |
             rsync -avz --delete \
               --exclude='.git/' \
@@ -74,7 +76,7 @@ jobs:
             echo "✅ Files synchronized using rsync."
 
       # ----------------------------------------------------------------------
-      # Step 2: SSH into the server to run commands and restart
+      # Step 2: SSH into the server to install dependencies and restart Phusion Passenger
       # ----------------------------------------------------------------------
       - name: 🔄 Server Setup & Restart (cPanel VENV)
         uses: appleboy/ssh-action@v1.0.0
@@ -87,12 +89,13 @@ jobs:
             echo "--- Activating cPanel Node.js Environment ---"
             cd ${{ env.APP_ROOT }}
 
-            # Activate the specific cPanel Node.js virtual environment
+            # --- VENV ACTIVATION (The critical step) ---
             if [ -f "${{ env.NODE_VENV_SCRIPT }}" ]; then
               source "${{ env.NODE_VENV_SCRIPT }}"
+              echo "✅ VENV Activated (Node.js version: $(node -v))"
             else
               echo "❌ ERROR: Node.js VENV script not found at ${{ env.NODE_VENV_SCRIPT }}"
-              echo "Please verify the 'NODE_VENV_SCRIPT' environment variable is correct."
+              echo "!!! STOP: Please verify the 'NODE_VENV_SCRIPT' environment variable is correct. !!!"
               exit 1
             fi
 
@@ -101,9 +104,21 @@ jobs:
             echo "✅ Dependencies installed"
 
             echo "--- Triggering cPanel Phusion Passenger Restart ---"
+            # This triggers the cPanel process manager to load the new app
             mkdir -p tmp
             touch tmp/restart.txt
             echo "✅ Application restart signaled. Deployment complete."
 
-            # Optional cleanup from previous attempts
+            # Clean up old PM2 process if lingering from previous attempts
             pm2 delete rhythm-medical-nextjs 2>/dev/null || true
+
+      - name: ✨ Deployment Summary
+        if: success()
+        run: |
+          echo "🎉 Deployment Successful!"
+          echo "========================"
+          echo "🌐 Website: ${{ env.NEXT_PUBLIC_SITE_URL }}"
+          echo "📅 Time: $(date)"
+          echo "🔄 Triggered by: ${{ github.event_name }}"
+          echo "📝 Commit: ${{ github.event.head_commit.message || 'Manual trigger' }}"
+          echo "👤 By: ${{ github.event.head_commit.author.name || 'N/A' }}"
