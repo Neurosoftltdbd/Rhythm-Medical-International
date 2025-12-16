@@ -3,7 +3,6 @@ name: Next.js Deploy to cPanel (Rhythm Medical)
 on:
   push:
     branches: [main, master]
-  # Allows you to trigger the workflow manually from the GitHub UI
   workflow_dispatch:
 
 jobs:
@@ -18,9 +17,8 @@ jobs:
       CPANEL_PORT: 22
       # --- Server Paths ---
       APP_ROOT: /home/rhythmme/public_html
-      # CRITICAL: Replace '18' with your Node.js version if different (e.g., '20')
-      # Get this exact path from your cPanel "Setup Node.js App" page.
-      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/20/bin/activate
+      # CRITICAL: Verify this path from cPanel's "Setup Node.js App" page.
+      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/18/bin/activate
       # --- Next.js Build Vars ---
       NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
 
@@ -42,49 +40,43 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_URL: ${{ env.NEXT_PUBLIC_SITE_URL }}
 
-      # ... (after Build Next.js App step) ...
-
       - name: 🧹 Clean up Artifacts Before Transfer
         run: |
-          # Remove cache files left by the build process
+          # Cleanup is now even more important since rsync can be sensitive to files
+          # This removes files that can cause transfer issues or are unnecessary
           find . -name '.DS_Store' -delete
           find . -name '*~' -delete
-          # Clean up any potential leftover node_modules folders if they slipped in
           rm -rf node_modules
-          # Remove logs or other temporary files
-          rm -rf logs
           echo "Cleanup complete."
 
-      - name: ⏫ Deploy Files via SCP
-        # ... (rest of the SCP action) .....
-
       # ----------------------------------------------------------------------
-      # Step 1: Transfer all necessary files to the server
+      # Step 1: Transfer all necessary files using rsync over SSH
       # ----------------------------------------------------------------------
-      - name: ⏫ Deploy Files via SCP
-        uses: appleboy/scp-action@v0.1.4
+      - name: ⏫ Deploy Files via rsync over SSH
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ env.CPANEL_HOST }}
           username: ${{ env.CPANEL_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ env.CPANEL_PORT }}
 
-          # Transfer the current directory (which now contains .next, public, package.json, etc.)
-          source: "."
-          target: ${{ env.APP_ROOT }}
-
-          # Crucial: Prevent large directories or unnecessary files from being transferred
-          exclude: |
-            .git
-            .github
-            .vscode
-            node_modules  # NEVER upload this; install on the server
-            *.md
-            .env*
-            .eslintrc.json
-            .prettierrc
-            .prettierignore
-          overwrite: true # Ensure new files replace old ones
+          # The rsync command to sync files from the current directory (.)
+          # to the remote APP_ROOT directory.
+          # -a: archive mode (preserves permissions, etc.)
+          # --delete: deletes files on the server that are NOT in the source
+          # --exclude: ignores specified patterns
+          script: |
+            rsync -avz --delete \
+              --exclude='.git/' \
+              --exclude='.github/' \
+              --exclude='node_modules/' \
+              --exclude='*.md' \
+              --exclude='.env*' \
+              --exclude='.eslintrc.json' \
+              --exclude='.prettierrc' \
+              --exclude='.prettierignore' \
+              ./ ${{ env.CPANEL_USER }}@${{ env.CPANEL_HOST }}:${{ env.APP_ROOT }}
+            echo "✅ Files synchronized using rsync."
 
       # ----------------------------------------------------------------------
       # Step 2: SSH into the server to run commands and restart
@@ -110,26 +102,13 @@ jobs:
             fi
 
             echo "--- Installing Production Dependencies ---"
-            # Install only production dependencies for the Next.js runtime
             npm install --only=production --no-audit --no-fund
             echo "✅ Dependencies installed"
 
             echo "--- Triggering cPanel Phusion Passenger Restart ---"
-            # This is the standard way to restart a cPanel-managed Node.js application
             mkdir -p tmp
             touch tmp/restart.txt
             echo "✅ Application restart signaled. Deployment complete."
 
-            # Optional: Check PM2 status (if you still have it running from previous attempts)
-            pm2 delete rhythm-medical-nextjs 2>/dev/null || echo "PM2 instance not found, clean."
-
-      - name: ✨ Deployment Summary
-        if: success()
-        run: |
-          echo "🎉 Deployment Successful!"
-          echo "========================"
-          echo "🌐 Website: ${{ env.NEXT_PUBLIC_SITE_URL }}"
-          echo "📅 Time: $(date)"
-          echo "🔄 Triggered by: ${{ github.event_name }}"
-          echo "📝 Commit: ${{ github.event.head_commit.message || 'Manual trigger' }}"
-          echo "👤 By: ${{ github.event.head_commit.author.name || 'N/A' }}"
+            # Optional cleanup from previous attempts
+            pm2 delete rhythm-medical-nextjs 2>/dev/null || true
