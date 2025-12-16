@@ -8,7 +8,7 @@ export default function HeroSection() {
     { value: "50k+", label: "Happy Patients" },
     { value: "350+", label: "Specialist Doctors" },
     { value: "98%", label: "Success Rate" },
-    { value: "15+ years", label: "Experience" },
+    { value: "15+", label: "Year's Experience" },
   ];
 
   return (
