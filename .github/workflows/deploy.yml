@@ -20,7 +20,7 @@ jobs:
       APP_ROOT: /home/rhythmme/public_html
       # CRITICAL: Replace '18' with your Node.js version if different (e.g., '20')
       # Get this exact path from your cPanel "Setup Node.js App" page.
-      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/18/bin/activate
+      NODE_VENV_SCRIPT: /home/rhythmme/nodevenv/public_html/20/bin/activate
       # --- Next.js Build Vars ---
       NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
 
