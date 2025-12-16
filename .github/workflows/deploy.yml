@@ -1,4 +1,4 @@
-name: Deploy via SSH Keys
+name: Deploy to Rhythm Medical cPanel
 
 on:
   push:
@@ -16,38 +16,215 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "18"
           cache: "npm"
 
-      - name: Install dependencies & build
-        run: |
-          npm ci
-          npm run build
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Create SSH key file
+      - name: Build Next.js app
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://rhythmmedicalint.com
+
+      - name: Setup SSH Environment
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" > ~/.ssh/config
           ssh-keyscan -H 14.128.15.182 >> ~/.ssh/known_hosts
 
-      - name: Deploy via RSYNC over SSH
-        uses: easingthemes/ssh-deploy@v4.1.8
+      - name: Deploy via SCP
+        uses: appleboy/scp-action@v0.1.4
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: 14.128.15.182
-          REMOTE_USER: rhythmme
-          TARGET: /home/rhythmme/public_html/
-          SOURCE: ./
-          EXCLUDE: "node_modules/, .git/, .github/, *.md, .env*"
+          host: 14.128.15.182
+          username: rhythmme
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "."
+          target: "/home/rhythmme/public_html"
+          strip_components: 1
+          rm: false
+          overwrite: true
+          exclude: |
+            .git
+            .github
+            .gitignore
+            node_modules
+            *.md
+            .env*
+            README.md
+            .eslintrc.json
+            .prettierrc
+            .prettierignore
 
-      - name: Setup on server
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
-            rhythmme@14.128.15.182 << 'EOF'
+      - name: Deploy build artifacts separately
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: 14.128.15.182
+          username: rhythmme
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: ".next"
+          target: "/home/rhythmme/public_html"
+          strip_components: 1
+          overwrite: true
+
+      - name: Deploy public folder separately
+        if: exists('public')
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: 14.128.15.182
+          username: rhythmme
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "public"
+          target: "/home/rhythmme/public_html"
+          strip_components: 1
+          overwrite: true
+
+      - name: Install dependencies on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 14.128.15.182
+          username: rhythmme
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "🔧 Setting up Node.js environment..."
             cd /home/rhythmme/public_html
-            npm install --only=production
-            # Restart with PM2 if installed
-            pm2 restart all 2>/dev/null || echo "PM2 not found, manual restart needed"
-            echo "✅ Deployment complete!"
-          EOF
+
+            # Check Node.js version
+            echo "Node.js version: $(node --version 2>/dev/null || echo 'Not found')"
+            echo "npm version: $(npm --version 2>/dev/null || echo 'Not found')"
+
+            # Install production dependencies
+            if [ -f "package.json" ]; then
+              echo "Installing Node.js dependencies..."
+              npm install --only=production --no-audit --no-fund
+              echo "✅ Dependencies installed"
+            else
+              echo "❌ package.json not found!"
+              ls -la
+              exit 1
+            fi
+
+      - name: Setup PM2 and restart application
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 14.128.15.182
+          username: rhythmme
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/rhythmme/public_html
+
+            # Check if PM2 is installed, install if not
+            if ! command -v pm2 &> /dev/null; then
+              echo "Installing PM2 globally..."
+              npm install -g pm2
+              echo "✅ PM2 installed"
+            else
+              echo "✅ PM2 already installed: $(pm2 --version)"
+            fi
+
+            # Create PM2 ecosystem file
+            echo "Creating PM2 configuration..."
+            cat > ecosystem.config.js << 'EOF'
+            module.exports = {
+              apps: [{
+                name: 'rhythm-medical-nextjs',
+                script: 'node_modules/next/dist/bin/next',
+                args: 'start',
+                cwd: '/home/rhythmme/public_html',
+                instances: 1,
+                autorestart: true,
+                watch: false,
+                max_memory_restart: '500M',
+                env: {
+                  NODE_ENV: 'production',
+                  PORT: 3000
+                },
+                env_production: {
+                  NODE_ENV: 'production',
+                  PORT: 3000
+                },
+                error_file: '/home/rhythmme/.pm2/logs/rhythm-medical-error.log',
+                out_file: '/home/rhythmme/.pm2/logs/rhythm-medical-out.log',
+                time: true
+              }]
+            }
+            EOF
+
+            # Manage PM2 process
+            echo "Managing application process..."
+
+            # Check if process already exists
+            if pm2 describe rhythm-medical-nextjs &> /dev/null; then
+              echo "Restarting existing application..."
+              pm2 reload rhythm-medical-nextjs --update-env
+            else
+              echo "Starting new application..."
+              pm2 start ecosystem.config.js --env production
+            fi
+
+            # Save PM2 process list
+            pm2 save 2>/dev/null || echo "Note: PM2 save may require sudo for startup script"
+
+            echo "✅ Application started with PM2"
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 14.128.15.182
+          username: rhythmme
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "📊 Deployment Verification"
+            echo "========================="
+
+            # Check if files exist
+            echo ""
+            echo "1. Checking deployed files:"
+            ls -la /home/rhythmme/public_html/.next 2>/dev/null && echo "✅ .next directory exists" || echo "❌ .next directory missing"
+            ls -la /home/rhythmme/public_html/package.json 2>/dev/null && echo "✅ package.json exists" || echo "❌ package.json missing"
+
+            # Check PM2 status
+            echo ""
+            echo "2. Checking PM2 status:"
+            pm2 list | grep rhythm-medical-nextjs && echo "✅ Application is running" || echo "❌ Application not found in PM2"
+
+            # Check if process is running
+            echo ""
+            echo "3. Checking if process is active:"
+            if pgrep -f "next.*start" > /dev/null; then
+              echo "✅ Next.js process is running"
+              echo "   Process info:"
+              pgrep -f "next.*start" | xargs ps -fp 2>/dev/null | head -5
+            else
+              echo "⚠️  No Next.js process found"
+            fi
+
+            # Test port 3000
+            echo ""
+            echo "4. Testing application port:"
+            if curl -s -f -o /dev/null --max-time 10 http://localhost:3000; then
+              echo "✅ Application responding on port 3000"
+            else
+              echo "⚠️  Application not responding on port 3000"
+              echo "   Checking logs for errors..."
+              tail -10 /home/rhythmme/.pm2/logs/rhythm-medical-error.log 2>/dev/null || echo "   No error log found"
+            fi
+
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "🎉 Deployment Successful!"
+          echo "========================"
+          echo "🌐 Website: https://rhythmmedicalint.com"
+          echo "📅 Time: $(date)"
+          echo "🔄 Triggered by: ${{ github.event_name }}"
+          echo "📝 Commit: ${{ github.event.head_commit.message || 'Manual trigger' }}"
+          echo "👤 By: ${{ github.event.head_commit.author.name || 'N/A' }}"
