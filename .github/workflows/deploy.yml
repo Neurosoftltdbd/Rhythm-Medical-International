@@ -56,7 +56,7 @@ jobs:
           echo "Cleanup complete."
 
       - name: ⏫ Deploy Files via SCP
-        # ... (rest of the SCP action) ...
+        # ... (rest of the SCP action) .....
 
       # ----------------------------------------------------------------------
       # Step 1: Transfer all necessary files to the server
