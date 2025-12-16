@@ -1,0 +1,57 @@
+name: Diagnose All Connections
+
+on: workflow_dispatch
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test All Host Variations
+        run: |
+          echo "🔍 Testing all possible connection methods..."
+          echo "============================================"
+
+          hosts=("rhythmmedicalint.com" "ftp.rhythmmedicalint.com" "14.128.15.182")
+          ports=("21" "22" "2087" "2083" "80" "443")
+
+          for host in "${hosts[@]}"; do
+            echo ""
+            echo "📡 Testing: $host"
+            echo "----------------"
+            
+            for port in "${ports[@]}"; do
+              echo -n "  Port $port: "
+              timeout 2 nc -z -w1 "$host" "$port" 2>/dev/null
+              if [ $? -eq 0 ]; then
+                echo "✅ OPEN"
+                
+                # Try to identify service
+                case $port in
+                  21) echo "      Service: FTP (File Transfer)" ;;
+                  22) echo "      Service: SSH/SFTP" ;;
+                  2083) echo "      Service: cPanel Web Interface" ;;
+                  2087) echo "      Service: cPanel SSH" ;;
+                  80) echo "      Service: HTTP Web" ;;
+                  443) echo "      Service: HTTPS Web" ;;
+                esac
+              else
+                echo "❌ CLOSED/Timeout"
+              fi
+            done
+          done
+
+          echo ""
+          echo "============================================"
+          echo "🎯 Recommendation based on open ports:"
+
+      - name: Check cPanel URL
+        run: |
+          echo ""
+          echo "🌐 Testing cPanel access..."
+          if curl -s -f -o /dev/null --max-time 5 "https://rhythmmedicalint.com:2083"; then
+            echo "✅ cPanel web interface is accessible"
+            echo "   URL: https://rhythmmedicalint.com:2083"
+          else
+            echo "❌ cPanel web interface NOT accessible"
+          fi
