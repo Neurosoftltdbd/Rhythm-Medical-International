@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     domains: ["*"],
     formats: ["image/avif", "image/webp"],
   },
+
   // Add security headers
   async headers() {
     return [
