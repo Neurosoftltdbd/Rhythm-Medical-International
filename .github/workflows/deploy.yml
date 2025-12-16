@@ -42,6 +42,22 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_URL: ${{ env.NEXT_PUBLIC_SITE_URL }}
 
+      # ... (after Build Next.js App step) ...
+
+      - name: 🧹 Clean up Artifacts Before Transfer
+        run: |
+          # Remove cache files left by the build process
+          find . -name '.DS_Store' -delete
+          find . -name '*~' -delete
+          # Clean up any potential leftover node_modules folders if they slipped in
+          rm -rf node_modules
+          # Remove logs or other temporary files
+          rm -rf logs
+          echo "Cleanup complete."
+
+      - name: ⏫ Deploy Files via SCP
+        # ... (rest of the SCP action) ...
+
       # ----------------------------------------------------------------------
       # Step 1: Transfer all necessary files to the server
       # ----------------------------------------------------------------------
@@ -117,5 +133,3 @@ jobs:
           echo "🔄 Triggered by: ${{ github.event_name }}"
           echo "📝 Commit: ${{ github.event.head_commit.message || 'Manual trigger' }}"
           echo "👤 By: ${{ github.event.head_commit.author.name || 'N/A' }}"
-
-          
