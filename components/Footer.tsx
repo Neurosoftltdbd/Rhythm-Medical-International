@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="w-full md:w-1/3">
           <h3 className="text-xl ">Contact Us</h3>
           <hr className="mb-4" />
-          <p>Email: Rhythmmedicalinternational@gmail.com</p>
+          <p>Email: rhythmmedicalint@gmail.com</p>
           <p>Phone: +8801819227038</p>
           <p>
             Address: House- 10/81/3, Modern Road, Dogair Notun Para, Word- 66,
