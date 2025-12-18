@@ -1,4 +1,4 @@
-import OurTeamSection from "@/components/OurTeamSection";
+import OurTeamSection from "@/components/home/OurTeamSection";
 
 export default function TeamPage() {
   return (

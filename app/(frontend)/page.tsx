@@ -1,9 +1,9 @@
-import AchivementSection from "@/components/AchivementSection";
-import HeroSection from "@/components/HeroSection";
-import MissionSection from "@/components/MissionSection";
-import OurTeamSection from "@/components/OurTeamSection";
-import TestimonialSection from "@/components/TestimonialSection";
-import VissionSection from "@/components/VissionSection";
+import AchivementSection from "@/components/home/AchivementSection";
+import HeroSection from "@/components/home/HeroSection";
+import MissionSection from "@/components/home/MissionSection";
+import OurTeamSection from "@/components/home/OurTeamSection";
+import TestimonialSection from "@/components/home/TestimonialSection";
+import VissionSection from "@/components/home/VissionSection";
 
 export default function Home() {
   return (
@@ -12,8 +12,8 @@ export default function Home() {
       <MissionSection />
       <VissionSection />
       <OurTeamSection />
-      <AchivementSection/>
-      <TestimonialSection/>
+      <AchivementSection />
+      <TestimonialSection />
     </div>
   );
 }

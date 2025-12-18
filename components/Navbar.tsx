@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav className="w-full flex items-center justify-between p-4 bg-green-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto ">
-        <div className="text-2xl font-bold text-gray-800 dark:text-white">
+        <div className="">
           <h2
             className="flex items-center justify-center"
             title="Leading the Future of Medical Technology and Healthcare Solutions"
@@ -25,7 +25,14 @@ export default function Navbar() {
                 height={50}
                 className="object-contain w-24 md:w-12"
               />
-              <span>Rhythm Medical International</span>
+              <div className="flex flex-col leading-tight items-center justify-center">
+                <span className="text-2xl font-bold text-red-600 dark:text-white">
+                  Rhythm Medical International
+                </span>
+                <span className="text-sm text-blue-600 dark:text-gray-300 italic">
+                  Close to your heart
+                </span>
+              </div>
             </Link>
           </h2>
         </div>
@@ -34,14 +41,14 @@ export default function Navbar() {
             <Link
               key={index}
               href={item.href}
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+              className="text-blue-600 dark:text-gray-300 hover:underline hover:text-blue-800 dark:hover:text-white"
             >
               {item.title}
             </Link>
           ))}
           <Link
             href="/login"
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+            className="text-blue-600 dark:text-gray-300 hover:underline hover:text-blue-800 dark:hover:text-white"
           >
             Login
           </Link>

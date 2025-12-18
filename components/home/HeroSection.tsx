@@ -12,7 +12,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="w-full bg-green-50 py-10 md:py-20">
+    <section className="w-full bg-blue-50 py-10 md:py-20">
       <div className="w-full max-w-7xl mx-auto">
         <div className="relative flex flex-col-reverse md:flex-row items-center gap-10">
           {/* Left: Text */}
@@ -22,7 +22,7 @@ export default function HeroSection() {
             transition={{ duration: 1.0, ease: "easeInOut" }}
             className="w-full lg:w-7/12 relative p-4 md:p-0 flex flex-col items-start"
           >
-            <h2 className="text-5xl md:text-7xl font-extrabold text-green-700 leading-tight font-poppins">
+            <h2 className="text-5xl md:text-7xl font-extrabold text-blue-700 leading-tight font-poppins">
               Rhythm Medical International
             </h2>
 
@@ -35,7 +35,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: "easeInOut" }}
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded mt-8 cursor-pointer animate-bounce hover:animate-none "
+                className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded mt-8 cursor-pointer animate-bounce hover:animate-none "
               >
                 Get Started
               </motion.button>
@@ -44,10 +44,10 @@ export default function HeroSection() {
             <div className="mt-10 flex gap-8 items-end">
               {stats.map((s) => (
                 <div key={s.label} className="text-left">
-                  <div className="text-2xl lg:text-3xl font-bold text-green-600">
+                  <div className="text-2xl lg:text-3xl font-bold text-red-600">
                     {s.value}
                   </div>
-                  <div className="text-sm text-slate-500">{s.label}</div>
+                  <div className="text-sm text-blue-500">{s.label}</div>
                 </div>
               ))}
             </div>
