@@ -1,3 +1,5 @@
+import { experience, leadership, satisfaction } from "./animationData";
+
 export const footerQuickLinks = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
@@ -40,3 +42,57 @@ export const team = [
     bio: "Nur Hossain is responsible for managing our IT infrastructure and ensuring our systems run smoothly.",
   },
 ];
+
+export const achivements = [
+  {
+    title: "Client Satisfaction",
+    description:
+      "Leading the Future of Medical Technology and Healthcare Solutions",
+    animation: satisfaction,
+  },
+  {
+    title: "15+ Years of Experience",
+    description:
+      "Leading the Future of Medical Technology and Healthcare Solutions",
+    animation: experience,
+  },
+  {
+    title: "Market Leadership and Sustainability",
+    description:
+      "Leading the Future of Medical Technology and Healthcare Solutions",
+    animation: leadership,
+  },
+];
+
+
+export const testimonials = [
+  {
+    id: 1,
+    name: "Dr. Ayesha Rahman",
+    role: "Chief Medical Officer",
+    message:
+      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+    rating: 5,
+    imageUrl: "/Masudur-Rahman.png",
+  },
+  {
+    id: 2,
+    name: "Mr. Kamal Hossain",
+    role: "Hospital Administrator",
+    message:
+      "The team was professional, responsive, and delivered on time. Their training session for our staff was excellent.",
+    rating: 5,
+    imageUrl: "/amalaker.jpg",
+  },
+  {
+    id: 3,
+    name: "Ms. Farida Khan",
+    role: "Procurement Lead",
+    message:
+      "Competitive pricing and reliable after-sales service. We continue to trust Rhythm for our medical supply needs.",
+    rating: 4,
+    imageUrl: "/mijan.jpg",
+  },
+];
+
+export type Testimonial = (typeof testimonials)[number];

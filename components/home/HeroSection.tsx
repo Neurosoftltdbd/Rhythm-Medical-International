@@ -12,7 +12,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="w-full bg-blue-50 py-10 md:py-20">
+    <section className="w-full bg-blue-100 py-10 md:py-20">
       <div className="w-full max-w-7xl mx-auto">
         <div className="relative flex flex-col-reverse md:flex-row items-center gap-10">
           {/* Left: Text */}

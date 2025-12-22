@@ -5,9 +5,9 @@ import Image from "next/image";
 
 export default function OurTeamSection() {
   return (
-    <section className="w-full bg-sky-50">
+    <section className="w-full bg-blue-100 py-20 dark:bg-gray-900">
       <div className="w-full max-w-7xl mx-auto items-center">
-        <div className="py-16">
+        <div className="py-8">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -41,13 +41,13 @@ export default function OurTeamSection() {
                 key={member.name}
                 className="w-full md:w-1/4 p-4"
               >
-                <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="bg-white rounded-lg shadow-lg p-4">
                   <Image
-                    className="w-60 h-60 rounded-full mx-auto mb-4"
+                    className="w-100 h-auto rounded-full mx-auto mb-4 shadow-md"
                     src={member.imageUrl}
                     alt={member.name}
-                    width={200}
-                    height={200}
+                    width={600}
+                    height={600}
                   />
                   <div>
                     <h3 className="text-xl font-semibold mb-2">
