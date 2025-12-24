@@ -17,12 +17,12 @@ export default function Footer() {
         <div className="w-full md:w-1/3">
           <h3 className="text-xl ">Quick Links</h3>
           <hr className="mb-4" />
-          <ul>
+          <ul className="list-none grid grid-cols-2 w-full ">
             {footerQuickLinks.map((link) => (
-              <li key={link.name} className="mb-2">
+              <li key={link.name} className="mb-2 ">
                 <Link
                   href={link.href}
-                  className="hover:underline hover:text-green-800 transition-all ease-in-out duration-500"
+                  className="hover:underline hover:text-green-600 transition-all ease-in-out duration-300"
                 >
                   {link.name}
                 </Link>

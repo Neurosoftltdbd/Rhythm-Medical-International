@@ -45,7 +45,7 @@ export default function ContactPage() {
                   66, South City Corporation, Demra, Dhaka-1361
                 </p>
                 <p>Phone: +8801819227038</p>
-                <p>Email: rhythmmedicalinternational@gmail.com</p>
+                <p>Email: rhythmmedicalint@gmail.com</p>
               </div>
             </div>
             <div className="flex flex-col gap-2 ">
@@ -56,7 +56,7 @@ export default function ContactPage() {
                   Panchlaish, Chattogram-4203
                 </p>
                 <p>Phone: +8801819227038</p>
-                <p>Email: rhythmmedicalinternational@gmail.com</p>
+                <p>Email: rhythmmedicalint@gmail.com</p>
               </div>
             </div>
           </motion.div>

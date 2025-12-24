@@ -1,4 +1,9 @@
-import { experience, leadership, satisfaction } from "./animationData";
+import {
+  experience,
+  leadership,
+  salesGrowth,
+  satisfaction,
+} from "./animationData";
 
 export const footerQuickLinks = [
   { name: "Home", href: "/" },
@@ -6,6 +11,9 @@ export const footerQuickLinks = [
   { name: "Team", href: "/team" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
+  { name: "Privacy Policy", href: "/privacy-policy" },
+  { name: "Terms & Conditions", href: "/terms-conditions" },
+  { name: "FAQ", href: "/faq" },
 ];
 
 export const team = [
@@ -41,29 +49,110 @@ export const team = [
     email: "nurhossain@rhythmmedicalint.com",
     bio: "Nur Hossain is responsible for managing our IT infrastructure and ensuring our systems run smoothly.",
   },
+  {
+    name: "Md. Iqbal Hossain Bhuiayan",
+    role: "Manager (Accounts & Finance)",
+    imageUrl: "/iqbal.jpeg",
+    phone: "+880 1829-938427",
+    email: "nurhossain@rhythmmedicalint.com",
+    bio: "Nur Hossain is responsible for managing our IT infrastructure and ensuring our systems run smoothly.",
+  },
+  {
+    name: "Engr. Md. Monjurul Alam",
+    role: "Manager (Marketing & Sales)",
+    imageUrl: "/monjur.jpg",
+    phone: "+880 1829-938427",
+    email: "nurhossain@rhythmmedicalint.com",
+    bio: "Nur Hossain is responsible for managing our IT infrastructure and ensuring our systems run smoothly.",
+  },
+  {
+    name: "Md. Rifat Hossain",
+    role: "Executive (Marketing & Sales)",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
+  {
+    name: "Md. Abdullah Al Noman",
+    role: "Executive (Marketing & Sales)",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
+  {
+    name: "Md. Zahidul Alam",
+    role: "Executive (Marketing & Sales)",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
+  {
+    name: "Md. Abul Kashem",
+    role: "Senior Logistics Officer",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
+  {
+    name: "Md. Mehedi",
+    role: "Senior Messenger",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
+  {
+    name: "Other person",
+    role: "Role",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
+  {
+    name: "Other person",
+    role: "Role",
+    imageUrl: "/person.svg",
+    phone: "+880 1829-000000",
+    email: "contact@rhythmmedicalint.com",
+    bio: "",
+  },
 ];
 
 export const achivements = [
   {
+    id: 1,
     title: "Client Satisfaction",
     description:
       "Leading the Future of Medical Technology and Healthcare Solutions",
     animation: satisfaction,
   },
   {
+    id: 2,
     title: "15+ Years of Experience",
     description:
       "Leading the Future of Medical Technology and Healthcare Solutions",
     animation: experience,
   },
   {
-    title: "Market Leadership and Sustainability",
+    id: 3,
+    title: "Market Leadership & Sustainability",
     description:
       "Leading the Future of Medical Technology and Healthcare Solutions",
     animation: leadership,
   },
+  {
+    id: 4,
+    title: "Significant Sales Growth",
+    description:
+      "Leading the Future of Medical Technology and Healthcare Solutions",
+    animation: salesGrowth,
+  },
 ];
-
 
 export const testimonials = [
   {
@@ -93,6 +182,40 @@ export const testimonials = [
     rating: 4,
     imageUrl: "/mijan.jpg",
   },
+  {
+    id: 4,
+    name: "Mr. Abdul Al Noman",
+    role: "Sales Manager",
+    message:
+      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+    rating: 5,
+    imageUrl: "/person.svg",
+  },
+  {
+    id: 5,
+    name: "Ms. Zahidul Alam",
+    role: "Sales Manager",
+    message:
+      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+    rating: 5,
+    imageUrl: "/person.svg",
+  },
+  {
+    id: 6,
+    name: "Mr. Abul Kashem",
+    role: "Sales Manager",
+    message:
+      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+    rating: 5,
+    imageUrl: "/person.svg",
+  },
+  {
+    id: 7,
+    name: "Ms. Mehedi",
+    role: "Sales Manager",
+    message:
+      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+    rating: 5,
+    imageUrl: "/person.svg",
+  },
 ];
-
-export type Testimonial = (typeof testimonials)[number];

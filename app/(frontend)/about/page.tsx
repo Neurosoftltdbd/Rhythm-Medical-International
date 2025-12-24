@@ -1,12 +1,21 @@
+"use client";
+import PageHeader from "@/components/PageHeader";
+import { motion } from "framer-motion";
 export default function AboutPage() {
   return (
-    <div className="w-full ">
+    <div className="w-full bg-green-50">
       <div className="w-full max-w-7xl mx-auto min-h-screen">
-        <div className="my-8">
-          <h2 className="text-2xl font-bold mb-4 text-center my-2">About Us</h2>
-          <hr />
-        </div>
-        <div className="p-4 md:p-0">
+        <PageHeader
+          title="About Us"
+          description="We are committed to excellence in health care, driven by a passion
+            for cardiac care and innovation."
+        />
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          className="p-4 md:p-0"
+        >
           <p className="text-justify mb-4">
             <strong>Rhythm Medical International</strong> is a leading provider
             of innovative cardiac solutions, specializing in high-quality
@@ -38,7 +47,7 @@ export default function AboutPage() {
           <p className="text-justify mb-4">
             Thank you for choosing us as your trusted partner.
           </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

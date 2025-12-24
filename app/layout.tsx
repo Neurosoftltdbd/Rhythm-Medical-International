@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 
-
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -22,25 +21,24 @@ export const metadata: Metadata = {
   description:
     "Leading the Future of Medical Technology and Healthcare Solutions",
   keywords: [
-    "Medical Technology",
-    "Healthcare Solutions",
-    "Innovative Medical Devices",
-    "Patient Care",
-    "Medical Research",
-    "HealthTech",
+    "Rhythm Medical International",
+    "Rhythm Medical",
+    "Medical Devices",
+    "Rhythm",
+    "Pacemakers",
+    "Coronary Stents",
+    "Wires",
+    "Heart Devices",
     "Medical Equipment",
-    "Digital Health",
-    "Telemedicine",
-    "Medical Software",
   ],
   authors: [
     { name: "Rhythm Medical International", url: "https://rhythmmedical.com" },
   ],
   robots: "index, follow",
   icons: {
-    icon: "/RMI-Logo.png",
-    shortcut: "/RMI-Logo.png",
-    apple: "/RMI-Logo.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   appleWebApp: {
     capable: true,
@@ -55,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "Rhythm Medical International",
     images: [
       {
-        url: "https://rhythmmedical.com/og-image.jpg",
+        url: "https://rhythmmedical.com/logo.png",
         width: 1200,
         height: 630,
         alt: "Rhythm Medical International",
@@ -69,7 +67,8 @@ export const metadata: Metadata = {
     title: "Rhythm Medical International",
     description:
       "Leading the Future of Medical Technology and Healthcare Solutions",
-    images: ["https://rhythmmedical.com/og-image.jpg"],
+    images: ["https://rhythmmedical.com/logo.png"],
+    creator: "@rhythmmedical",
   },
 };
 

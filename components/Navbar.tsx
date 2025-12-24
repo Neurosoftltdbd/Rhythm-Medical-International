@@ -10,14 +10,17 @@ export default function Navbar() {
     { title: "Contact", href: "/contact" },
   ];
   return (
-    <nav className="w-full flex items-center justify-between p-4 bg-blue-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
-      <div className="flex justify-between items-center w-full max-w-7xl mx-auto ">
+    <nav className="w-full flex items-center justify-between py-2 bg-blue-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
+      <div className="flex justify-center md:justify-between items-center w-full max-w-7xl mx-auto ">
         <div className="">
           <h2
             className="flex items-center"
             title="Leading the Future of Medical Technology and Healthcare Solutions"
           >
-            <Link className="flex items-center gap-4" href="/">
+            <Link
+              className="flex items-center gap-4 justify-center md:justify-start"
+              href="/"
+            >
               <Image
                 src="/logo.png"
                 alt="RMI Logo"
@@ -26,7 +29,7 @@ export default function Navbar() {
                 className="object-contain w-24 md:w-12"
               />
               <div className="flex flex-col leading-tight">
-                <span className="text-2xl font-bold text-red-600 dark:text-white">
+                <span className="text-lg font-bold text-red-600 dark:text-white">
                   Rhythm Medical International
                 </span>
                 <span className="text-sm text-blue-600 dark:text-gray-300 italic text-start">
@@ -59,7 +62,7 @@ export default function Navbar() {
           {navigationBarItem.map((item, index) => (
             <li
               key={index}
-              className="bg-green-600 hover:bg-green-700 text-gray-100 "
+              className="bg-green-600 hover:bg-green-700 text-gray-100 w-full text-center"
             >
               <Link key={index} href={item.href} className="px-4 py-2 block">
                 {item.title}

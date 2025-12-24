@@ -1,9 +1,14 @@
+"use client";
 import { testimonials } from "@/data/data";
 import Image from "next/image";
+import "swiper/css";
+import "swiper/css/autoplay";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function TestimonialSection() {
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-gray-100 py-12">
       <div className="w-full max-w-7xl mx-auto py-12 px-4 md:px-0">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold">Testimonials</h2>
@@ -13,11 +18,37 @@ export default function TestimonialSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={32}
+          className="py-8"
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 32,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 32,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 32,
+            },
+          }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          centeredSlides={true}
+          grabCursor={true}
+          loop={true}
+          modules={[Autoplay]}
+        >
           {testimonials.map((t) => (
-            <article
+            <SwiperSlide
               key={t.id}
-              className="bg-gray-50 p-6 rounded-lg shadow-sm flex flex-col h-full"
+              className="bg-white p-6 rounded-lg shadow-lg flex flex-col h-full"
             >
               <blockquote className="text-gray-800 mb-4 flex-1">
                 <p className="text-sm md:text-base">“{t.message}”</p>
@@ -67,9 +98,9 @@ export default function TestimonialSection() {
                   </div>
                 </div>
               </div>
-            </article>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </section>
   );
