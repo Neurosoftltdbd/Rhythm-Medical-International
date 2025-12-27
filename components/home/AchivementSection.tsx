@@ -24,7 +24,7 @@ export default function AchivementSection() {
                 className="w-full bg-blue-200 shadow-lg rounded-lg p-4"
               >
                 <div className="w-3/4 mx-auto flex items-center justify-center">
-                  <Lottie animationData={item.animation} loop={true} />
+                  <Lottie animationData={item.animation} loop />
                 </div>
                 <h3 className="px-4 text-2xl font-semibold text-center">
                   {item.title}

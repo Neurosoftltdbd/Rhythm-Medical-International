@@ -1,18 +1,19 @@
 "use client";
-import { animationData } from "@/data/animationData";
+import { animationData, wave } from "@/data/animationData";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import Image from "next/image";
+import Link from "next/link";
 export default function HeroSection() {
   const stats = [
-    { value: "50k+", label: "Happy Patients" },
-    { value: "350+", label: "Specialist Doctors" },
-    { value: "98%", label: "Success Rate" },
+    { value: "48k+", label: "Happy Patients" },
+    { value: "290+", label: "Specialist Doctors" },
+    { value: "97.3%", label: "Success Rate" },
     { value: "15+", label: "Year's Experience" },
   ];
 
   return (
-    <section className="w-full bg-blue-100 py-10 md:py-20">
+    <section className="w-full bg-blue-100 py-10 md:py-20 relative overflow-hidden">
       <div className="w-full max-w-7xl mx-auto">
         <div className="relative flex flex-col-reverse md:flex-row items-center gap-10">
           {/* Left: Text */}
@@ -37,7 +38,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.9, ease: "easeInOut" }}
                 className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded mt-8 cursor-pointer animate-bounce hover:animate-none "
               >
-                Get Started
+                <Link href="/contact">Contact Us</Link>
               </motion.button>
             </div>
 
@@ -52,9 +53,9 @@ export default function HeroSection() {
               ))}
             </div>
             <Lottie
+              id="ecg-animation"
               animationData={animationData}
-              loop={true}
-              autoPlay
+              loop
               className="w-full h-full max-h-120 absolute mt-8 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none"
             />
           </motion.div>
@@ -80,6 +81,12 @@ export default function HeroSection() {
           </motion.div>
         </div>
       </div>
+      <Lottie
+        id="background-wave"
+        animationData={wave}
+        loop
+        className="w-full h-full absolute top-0 left-0 pointer-events-none"
+      />
     </section>
   );
 }

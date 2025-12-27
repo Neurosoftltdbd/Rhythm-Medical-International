@@ -33,7 +33,7 @@ export default function VissionSection() {
               </h2>
             </div>
 
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
               Our vision is to be the most trusted and recognized name in the
               cardiac industry by continuously developing cutting-edge products
               and dominating the market. We envision a future where Rhythm

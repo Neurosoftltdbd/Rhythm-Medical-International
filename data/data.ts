@@ -162,7 +162,7 @@ export const testimonials = [
     message:
       "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
     rating: 5,
-    imageUrl: "/Masudur-Rahman.png",
+    imageUrl: "/person.svg",
   },
   {
     id: 2,
@@ -171,7 +171,7 @@ export const testimonials = [
     message:
       "The team was professional, responsive, and delivered on time. Their training session for our staff was excellent.",
     rating: 5,
-    imageUrl: "/amalaker.jpg",
+    imageUrl: "/person.svg",
   },
   {
     id: 3,
@@ -180,14 +180,14 @@ export const testimonials = [
     message:
       "Competitive pricing and reliable after-sales service. We continue to trust Rhythm for our medical supply needs.",
     rating: 4,
-    imageUrl: "/mijan.jpg",
+    imageUrl: "/person.svg",
   },
   {
     id: 4,
     name: "Mr. Abdul Al Noman",
     role: "Sales Manager",
     message:
-      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+      "Rhythm Medical International is our go-to partner for medical equipment. Their products are top-notch and their support is unparalleled.",
     rating: 5,
     imageUrl: "/person.svg",
   },
@@ -196,7 +196,7 @@ export const testimonials = [
     name: "Ms. Zahidul Alam",
     role: "Sales Manager",
     message:
-      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+      "Rhythm Medical International was instrumental in helping us upgrade our facilities with the latest technology.",
     rating: 5,
     imageUrl: "/person.svg",
   },
@@ -205,7 +205,7 @@ export const testimonials = [
     name: "Mr. Abul Kashem",
     role: "Sales Manager",
     message:
-      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+      "Rhythm Medical International supplied us with high-quality medical devices that have enhanced our patient care services.",
     rating: 5,
     imageUrl: "/person.svg",
   },
@@ -214,7 +214,7 @@ export const testimonials = [
     name: "Ms. Mehedi",
     role: "Sales Manager",
     message:
-      "Rhythm Medical International provided outstanding support and high-quality equipment — our clinical outcomes improved noticeably.",
+      "Rhythm Medical International staff were knowledgeable and attentive to our needs, ensuring we got the right solutions for our clinic.",
     rating: 5,
     imageUrl: "/person.svg",
   },

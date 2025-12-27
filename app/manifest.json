@@ -1,0 +1,33 @@
+{
+  "manifest_version": 1,
+  "name": "Rhythm Medical International",
+  "short_name": "RMI",
+  "description": "Leading the Future of Medical Technology and Healthcare Solutions",
+  "version": "1.0.0",
+  "author": "Rhythm Medical International",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#008000",
+  "theme_color": "#008000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "en-US",
+  "dir": "ltr"
+}

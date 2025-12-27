@@ -8,7 +8,7 @@ import VissionSection from "@/components/home/VissionSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rhythm Medical International - Home",
+  title: "Home",
   description:
     "Leading the Future of Medical Technology and Healthcare Solutions",
   keywords: [
@@ -109,7 +109,7 @@ const schemaMarkup = {
       "@type": "WebPage",
       "@id": "https://rhythmmedicalint.com/#homepage",
       url: "https://rhythmmedicalint.com/",
-      name: "Rhythm Medical International - Home",
+      name: "Home",
       isPartOf: { "@id": "https://rhythmmedicalint.com/#website" },
       breadcrumb: { "@id": "https://rhythmmedicalint.com/#breadcrumb" },
       inLanguage: "en-US",

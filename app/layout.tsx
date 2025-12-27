@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -8,15 +8,18 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
+  metadataBase: new URL("https://rhythmmedicalint.com"),
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/",
+    },
+  },
   title: {
     default: "Rhythm Medical International",
-    template: "%s | Rhythm Medical International",
+    template: "%s - Rhythm Medical International",
   },
   description:
     "Leading the Future of Medical Technology and Healthcare Solutions",
@@ -32,7 +35,10 @@ export const metadata: Metadata = {
     "Medical Equipment",
   ],
   authors: [
-    { name: "Rhythm Medical International", url: "https://rhythmmedical.com" },
+    {
+      name: "Rhythm Medical International",
+      url: "https://rhythmmedicalint.com",
+    },
   ],
   robots: "index, follow",
   icons: {
@@ -49,11 +55,11 @@ export const metadata: Metadata = {
     title: "Rhythm Medical International",
     description:
       "Leading the Future of Medical Technology and Healthcare Solutions",
-    url: "https://rhythmmedical.com",
+    url: "https://rhythmmedicalint.com",
     siteName: "Rhythm Medical International",
     images: [
       {
-        url: "https://rhythmmedical.com/logo.png",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "Rhythm Medical International",
@@ -67,8 +73,8 @@ export const metadata: Metadata = {
     title: "Rhythm Medical International",
     description:
       "Leading the Future of Medical Technology and Healthcare Solutions",
-    images: ["https://rhythmmedical.com/logo.png"],
-    creator: "@rhythmmedical",
+    images: ["/logo.png"],
+    creator: "@rhythmmedicalint",
   },
 };
 
@@ -79,9 +85,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${geistMono.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={`${poppins.variable}  antialiased`}>{children}</body>
     </html>
   );
 }

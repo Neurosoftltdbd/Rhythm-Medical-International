@@ -36,7 +36,7 @@ export default function MissionSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.0, ease: "easeInOut" }}
-              className="mt-4 text-lg text-gray-600 dark:text-gray-300 leading-relaxed"
+              className="mt-4 text-lg text-gray-600 dark:text-gray-300 leading-relaxed text-justify"
             >
               Our mission is to harness our expertise and innovation to create
               any type of cardiac product and make it the market leader. We are

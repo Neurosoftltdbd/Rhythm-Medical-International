@@ -17,21 +17,21 @@ export default function ServiceSection() {
             <div className="flex items-center gap-4 mb-4">
               <Lottie
                 animationData={handShakeingAnimationData}
-                loop={true}
+                loop
                 className="w-32 h-32"
               />
               <h3 className="text-2xl font-semibold">
                 Pacemaker Implantation and Post Implant Follow-up service
               </h3>
             </div>
-            <p className="mb-6">
+            <p className="mb-6 text-justify">
               We offer comprehensive pacemaker implantation services, ensuring
               that patients receive the best care before, during, and after the
               procedure. Our post-implant follow-up services include regular
               check-ups and device monitoring to ensure optimal performance and
               patient well-being.
             </p>
-            <p>
+            <p className="text-justify">
               Our services are designed to provide a comprehensive solution for
               patients seeking pacemaker implantation and follow-up care.
               Whether you are a patient seeking pacemaker implantation or a
