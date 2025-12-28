@@ -1,5 +1,5 @@
 "use client";
-import { handShakeingAnimationData } from "@/data/animationData";
+import { handShakeingAnimationData } from "@/data/animation/animationData";
 import Lottie from "lottie-react";
 import Image from "next/image";
 import PageHeader from "../PageHeader";
@@ -15,7 +15,8 @@ export default function ServiceSection() {
         <div className="flex flex-col-reverse md:flex-row gap-12 py-8 items-center px-4 md:px-0 ">
           <div className="flex-1">
             <div className="flex items-center gap-4 mb-4">
-              <Lottie id="hand-shake"
+              <Lottie
+                id="hand-shake"
                 animationData={handShakeingAnimationData}
                 className="w-32 h-32"
               />

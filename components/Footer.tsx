@@ -35,9 +35,13 @@ export default function Footer() {
           <hr className="mb-4" />
           <p>Email: rhythmmedicalint@gmail.com</p>
           <p>Phone: +8801819227038</p>
-          <p>
-            Address: House- 10/81/3, Modern Road, Dogair Notun Para, Word- 66,
-            South City Corporation, Demra, Dhaka-1361
+          <p className="my-4 text-sm">
+            Head Office: House- 10/81/3, Modern Road, Dogair Notun Para, Word-
+            66, South City Corporation, Demra, Dhaka-1361
+          </p>
+          <p className="text-sm">
+            Regional Office: Hill View Society R/A, House- 27, Road- 1, Word-15,
+            Panchlaish, Chattogram-4203
           </p>
         </div>
       </div>

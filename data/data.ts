@@ -1,5 +1,9 @@
-import { experience, leadership, satisfaction, salesGrowth } from "./animationData";
-
+import {
+  experience,
+  leadership,
+  satisfaction,
+} from "./animation/animationData";
+import { salesGrowth } from "./animation/salesGrowth";
 
 export const footerQuickLinks = [
   { name: "Home", href: "/" },
@@ -23,7 +27,7 @@ export const team = [
   },
   {
     name: "Angshuman Malaker",
-    role: "Chief Consultant",
+    role: "Chief Advisory Officer",
     imageUrl: "/amalaker.jpg",
     phone: "+880 1819-244779",
     email: "amalaker@rhythmmedicalint.com",
@@ -31,7 +35,7 @@ export const team = [
   },
   {
     name: "Md. Mijanur Rahman",
-    role: "Chief Technical Officer",
+    role: "Chief Consultant Officer",
     imageUrl: "/mijan.jpg",
     phone: "+880 1710-189756",
     email: "mijan@rhythmmedicalint.com",

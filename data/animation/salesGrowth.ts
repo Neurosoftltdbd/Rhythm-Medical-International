@@ -1,4 +1,4 @@
-{
+export const salesGrowth = {
   v: "5.9.6",
   fr: 30,
   ip: 0,
@@ -22300,4 +22300,4 @@
     },
   ],
   markers: [],
-}
+};

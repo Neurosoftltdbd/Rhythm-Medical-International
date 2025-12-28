@@ -1,4 +1,4 @@
-export const wave = {
+export const wave1 = {
   v: "5.6.5",
   fr: 30,
   ip: 0,

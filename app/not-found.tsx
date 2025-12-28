@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { notFoundAnimationData } from "@/data/notFound";
+import { notFoundAnimationData } from "@/data/animation/notFound";
 import Lottie from "lottie-react";
 import Link from "next/link";
 export default function NotFound() {

@@ -1,5 +1,5 @@
 "use client";
-import { loadingWaveAnimationData } from "@/data/animationData";
+import { loadingWaveAnimationData } from "@/data/animation/animationData";
 import Lottie from "lottie-react";
 export default function Loader() {
   return (
