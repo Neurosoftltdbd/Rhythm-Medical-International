@@ -1,9 +1,11 @@
 "use client";
-import { animationData, wave } from "@/data/animationData";
+import { animationData } from "@/data/animationData";
+import wave from "@/data/wave.json";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import Image from "next/image";
 import Link from "next/link";
+
 export default function HeroSection() {
   const stats = [
     { value: "48k+", label: "Happy Patients" },
@@ -75,6 +77,7 @@ export default function HeroSection() {
                   width={600}
                   height={600}
                   className="object-cover "
+                  loading="eager"
                 />
               </div>
             </div>
@@ -82,10 +85,10 @@ export default function HeroSection() {
         </div>
       </div>
       <Lottie
+        key="background-wave"
         id="background-wave"
         animationData={wave}
-        loop
-        className="w-full h-full absolute top-0 left-0 pointer-events-none"
+        className="w-full h-full max-w-dvw max-h-dvh absolute top-0 left-0"
       />
     </section>
   );

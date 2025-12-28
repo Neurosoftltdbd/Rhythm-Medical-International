@@ -44,6 +44,8 @@ export default function Navbar() {
             <Link
               key={index}
               href={item.href}
+              title={item.title}
+              rel="noopener noreferrer"
               className="text-blue-600 dark:text-gray-300 hover:underline hover:text-blue-800 dark:hover:text-white"
             >
               {item.title}

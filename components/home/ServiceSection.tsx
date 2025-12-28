@@ -15,9 +15,8 @@ export default function ServiceSection() {
         <div className="flex flex-col-reverse md:flex-row gap-12 py-8 items-center px-4 md:px-0 ">
           <div className="flex-1">
             <div className="flex items-center gap-4 mb-4">
-              <Lottie
+              <Lottie id="hand-shake"
                 animationData={handShakeingAnimationData}
-                loop
                 className="w-32 h-32"
               />
               <h3 className="text-2xl font-semibold">

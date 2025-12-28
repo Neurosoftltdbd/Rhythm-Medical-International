@@ -1,9 +1,5 @@
-import {
-  experience,
-  leadership,
-  salesGrowth,
-  satisfaction,
-} from "./animationData";
+import { experience, leadership, satisfaction, salesGrowth } from "./animationData";
+
 
 export const footerQuickLinks = [
   { name: "Home", href: "/" },
