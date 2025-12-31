@@ -33,6 +33,7 @@ export const metadata = {
   },
 };
 export default function ContactPage() {
+  
   return (
     <div className="w-full">
       <div className="w-full max-w-7xl mx-auto min-h-screen">

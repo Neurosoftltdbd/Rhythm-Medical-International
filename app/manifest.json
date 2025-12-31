@@ -3,7 +3,7 @@
   "name": "Rhythm Medical International",
   "short_name": "RMI",
   "description": "Leading the Future of Medical Technology and Healthcare Solutions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Rhythm Medical International",
   "icons": [
     {
@@ -23,8 +23,8 @@
     }
   ],
   "start_url": ".",
-  "background_color": "#008000",
-  "theme_color": "#008000",
+  "background_color": "#0096FF",
+  "theme_color": "#0096FF",
   "orientation": "portrait-primary",
   "scope": "/",
   "display": "standalone",

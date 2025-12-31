@@ -1,6 +1,6 @@
 "use client";
 import { animationData } from "@/data/animation/animationData";
-import { wave } from "@/data/animation/wave";
+import { heroWave } from "@/data/animation/heroWave";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import Image from "next/image";
@@ -15,8 +15,8 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="w-full bg-blue-100">
-      <div className="w-full max-w-7xl mx-auto py-10 md:py-20">
+    <section className="w-full bg-blue-50">
+      <div className="w-full max-w-7xl mx-auto py-10 md:py-20 z-10">
         <div className="relative flex flex-col-reverse md:flex-row items-center gap-10">
           {/* Left: Text */}
           <motion.div
@@ -85,8 +85,8 @@ export default function HeroSection() {
         </div>
       </div>
       <Lottie
-        animationData={wave}
-        className="w-full h-full max-w-dvw max-h-dvh absolute top-5 -right-1/3 rotate-90"
+        animationData={heroWave}
+        className="w-full h-auto absolute top-0 left-0 z-0 opacity-50 pointer-events-none"
       />
     </section>
   );

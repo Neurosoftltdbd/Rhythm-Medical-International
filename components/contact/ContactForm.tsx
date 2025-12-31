@@ -13,7 +13,9 @@ export default function ContactForm() {
     message: "",
   });
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (!messages.name) {
       toast.error("Name is required");
@@ -24,15 +26,25 @@ export default function ContactForm() {
     } else if (!messages.message) {
       toast.error("Message is required");
     } else {
-      toast.success("Message sent successfully!");
-      console.log("Submitted Message:", messages);
-
-      setMessages({
-        name: "",
-        phone: "",
-        email: "",
-        message: "",
+      const response = await fetch("/api/v2/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(messages),
       });
+
+      if (response.status === 200) {
+        toast.success("Message sent successfully!");
+        setMessages({
+          name: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
     }
   };
   return (
