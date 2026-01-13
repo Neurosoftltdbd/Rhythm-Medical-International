@@ -1,5 +1,36 @@
 import PageHeader from "@/components/PageHeader";
 
+export const metadata = {
+  title: "Privacy Policy",
+  description:
+    "Carefully review our privacy policy to understand how we handle your information.",
+  openGraph: {
+    title: "Privacy Policy",
+    description:
+      "Carefully review our privacy policy to understand how we handle your information.",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    siteName: "Rhythm Medical International",
+  },
+  twitter: {
+    title: "Privacy Policy",
+    description:
+      "Carefully review our privacy policy to understand how we handle your information.",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    card: "summary_large_image",
+  },
+};
 export default function privacyPolicy() {
   return (
     <div className="w-full bg-green-50">

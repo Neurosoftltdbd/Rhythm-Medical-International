@@ -9,6 +9,7 @@ export default function Navbar() {
     { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" },
   ];
+
   return (
     <nav className="w-full flex items-center justify-between py-2 bg-blue-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
       <div className="flex justify-center md:justify-between items-center w-full max-w-7xl mx-auto ">
@@ -29,7 +30,9 @@ export default function Navbar() {
                 className="object-contain w-24 md:w-12"
               />
               <div className="flex flex-col leading-tight">
-                <span className="text-lg font-bold text-red-600 dark:text-white">
+                <span
+                  className={`text-lg font-bold text-red-600 dark:text-white italic`}
+                >
                   Rhythm Medical International
                 </span>
                 <span className="text-sm text-blue-600 dark:text-gray-300 italic text-start">

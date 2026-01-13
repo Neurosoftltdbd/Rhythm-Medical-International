@@ -1,5 +1,40 @@
 import PageHeader from "@/components/PageHeader";
 
+
+export const metadata = {
+  title: "Latest Blog",
+  description:
+    "Welcome to our blog page where we share the latest updates and insights.",
+  openGraph: {
+    title: "Latest Blog",
+    description:
+      "Welcome to our blog page where we share the latest updates and insights.",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    siteName: "Rhythm Medical International",
+  },
+  twitter: {
+    title: "Latest Blog",
+    description:
+      "Welcome to our blog page where we share the latest updates and insights.",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    card: "summary_large_image",
+  },
+};
+
+
+
 export default function blog() {
   return (
     <div className="w-full bg-green-50">

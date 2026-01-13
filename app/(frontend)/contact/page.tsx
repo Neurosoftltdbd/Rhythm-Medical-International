@@ -33,9 +33,8 @@ export const metadata = {
   },
 };
 export default function ContactPage() {
-  
   return (
-    <div className="w-full">
+    <div className="w-full bg-blue-50">
       <div className="w-full max-w-7xl mx-auto min-h-screen">
         <PageHeader
           title="Contact Us"
@@ -45,7 +44,7 @@ export default function ContactPage() {
           <div className="w-full md:w-1/2">
             <ContactForm />
           </div>
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2 flex items-center">
             <AddressComponent />
           </div>
         </div>

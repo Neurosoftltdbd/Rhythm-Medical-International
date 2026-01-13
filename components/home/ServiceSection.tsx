@@ -41,7 +41,7 @@ export default function ServiceSection() {
           </div>
           <div className="flex-1">
             <Image
-              src="/pacemaker.jpg"
+              src="/upload/pacemaker.jpg"
               alt="Service 1"
               width={600}
               height={600}

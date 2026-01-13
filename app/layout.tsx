@@ -1,11 +1,37 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import {
+  Merriweather,
+  Playfair_Display,
+  Poppins,
+  Racing_Sans_One,
+} from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-poppins",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-playfair-display",
+  display: "swap",
+});
+
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-merriweather",
+  display: "swap",
+});
+
+const racingSansOne = Racing_Sans_One({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-racing-sans-one",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -85,7 +111,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}  antialiased`}>{children}</body>
+      <body
+        className={`${poppins.variable} ${playfair.variable} ${merriweather.variable} ${racingSansOne.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

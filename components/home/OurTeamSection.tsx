@@ -8,14 +8,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function OurTeamSection() {
   return (
-    <section className="w-full bg-blue-50 py-20 dark:bg-gray-900">
+    <section className="w-full bg-green-100 py-20 dark:bg-gray-900 ">
       <div className="w-full max-w-7xl mx-auto items-center">
         <div className="py-8">
           <motion.h2
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.0, ease: "easeInOut" }}
-            className="text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-4"
+            className="text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-2"
           >
             Our Team
           </motion.h2>
@@ -77,8 +77,8 @@ export default function OurTeamSection() {
             }}
           >
             {team.map((member, index) => (
-              <SwiperSlide key={index}>
-                <div className="bg-white rounded-lg shadow-lg p-4">
+              <SwiperSlide key={index} className="my-8">
+                <div className="bg-gray-50 rounded-lg shadow-lg p-4">
                   <Image
                     className="aspect-square rounded-full mx-auto mb-4 shadow-md"
                     src={member.imageUrl}

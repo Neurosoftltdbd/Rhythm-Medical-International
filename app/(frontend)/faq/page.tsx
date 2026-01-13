@@ -1,39 +1,59 @@
 import PageHeader from "@/components/PageHeader";
+import { faqList } from "@/data/data";
+
+export const metadata = {
+  title: "Frequently Asked Questions (FAQ)",
+  description:
+    "Find answers to common questions about our services and offerings. We're here to help!",
+  openGraph: {
+    title: "Frequently Asked Questions (FAQ)",
+    description:
+      "Find answers to common questions about our services and offerings. We're here to help!",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    siteName: "Rhythm Medical International",
+  },
+  twitter: {
+    title: "Frequently Asked Questions (FAQ)",
+    description:
+      "Find answers to common questions about our services and offerings. We're here to help!",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    card: "summary_large_image",
+  },
+};
 
 export default function faq() {
   return (
     <div className="w-full bg-green-50">
       <div className="w-full max-w-7xl mx-auto min-h-screen">
         <PageHeader
-          title="Frequently Asked Questions Page"
-          description="Find answers to common questions about our services and offerings."
+          title="Frequently Asked Questions (FAQ)"
+          description="Find answers to common questions about our services and offerings. We're here to help!"
         />
-        <div>
-          <div className="mb-4 bg-green-100 p-4 rounded shadow-lg">
-            <h2 className="text-lg font-semibold">
-              What services do you offer?
-            </h2>
-            <p className="mt-2">
-              We offer a range of cardiac solutions including coronary stents,
-              guide wires, and heart devices.
-            </p>
-          </div>
-          <div className="mb-4 bg-green-100 p-4 rounded shadow-lg">
-            <h2 className="text-lg font-semibold">
-              How can I schedule an appointment?
-            </h2>
-            <p className="mt-2">
-              You can schedule an appointment online or by calling our office.
-            </p>
-          </div>
-          <div className="mb-4 bg-green-100 p-4 rounded shadow-lg">
-            <h2 className="text-lg font-semibold">
-              What is your opening hours?
-            </h2>
-            <p className="mt-2">
-              We are open Saturday to Thirsday from 8am to 5pm.
-            </p>
-          </div>
+        <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto">
+          {faqList &&
+            faqList.map((faq, index) => {
+              return (
+                <div
+                  key={index}
+                  className="mb-4 bg-blue-200 p-8 rounded shadow-lg"
+                >
+                  <h2 className="text-lg font-bold ">{faq.question}</h2>
+                  <p className="mt-2">{faq.answer}</p>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

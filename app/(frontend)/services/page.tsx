@@ -1,4 +1,6 @@
-import ServiceSection from "@/components/home/ServiceSection";
+import PageHeader from "@/components/PageHeader";
+import SectionComponent from "@/components/SectionComponent";
+import { serviceList } from "@/data/data";
 
 export const metadata = {
   title: "Our Services",
@@ -16,17 +18,6 @@ export const metadata = {
   authors: [
     { name: "Rhythm Medical International", url: "https://rhythmmedical.com" },
   ],
-  robots: "index, follow",
-  icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "Rhythm Medical International",
-  },
   openGraph: {
     title: "Our Services",
     description:
@@ -48,6 +39,13 @@ export const metadata = {
     title: "Our Services",
     description:
       "Explore the Medical Services Offered by Rhythm Medical International",
+    images: [
+      {
+        url: "https://rhythmmedical.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
   },
 };
 
@@ -79,55 +77,14 @@ export const schemaMarkup = {
         "Leading the Future of Medical Technology and Healthcare Solutions",
     },
     {
-      "@type": "WebSite",
-      "@id": "https://rhythmmedicalint.com/#website",
-      url: "https://rhythmmedicalint.com",
-      name: "Rhythm Medical International",
-      publisher: { "@id": "https://rhythmmedicalint.com/#organization" },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: "https://rhythmmedicalint.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string",
-      },
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://rhythmmedicalint.com/services#webpage",
-      url: "https://rhythmmedicalint.com/services",
-      name: "Our Services - Rhythm Medical International",
-      isPartOf: { "@id": "https://rhythmmedicalint.com/#website" },
-      breadcrumb: { "@id": "https://rhythmmedicalint.com/#breadcrumb" },
-      inLanguage: "en-US",
-      description:
-        "Explore the Medical Services Offered by Rhythm Medical International",
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": "https://rhythmmedicalint.com/#breadcrumb",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://rhythmmedicalint.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Services",
-          item: "https://rhythmmedicalint.com/services",
-        },
-      ],
-    },
-    {
       "@type": "Service",
       "@id": "https://rhythmmedicalint.com/services/pacemaker-implantation",
-      name: "Pacemaker Implantation",
-      serviceType: "Pacemaker Implantation",
+      name: "Pacemaker Implantation and Post Implant Follow-up service",
+      serviceType: "Pacemaker Implantation and Post Implant Follow-up service",
       description:
-        "Comprehensive pacemaker implantation services and device support.",
+        "Pacemaker Implantation and Post Implant Follow-up service Offered by Rhythm Medical International.",
       provider: { "@id": "https://rhythmmedicalint.com/#organization" },
-      url: "https://rhythmmedicalint.com/services#pacemaker-implantation",
+      url: "https://rhythmmedicalint.com/services#pacemaker-implantation-and-post-implant-follow-up-service",
     },
     {
       "@type": "Service",
@@ -142,30 +99,35 @@ export const schemaMarkup = {
     {
       "@type": "Service",
       "@id": "https://rhythmmedicalint.com/services/wires",
-      name: "Guide Wires",
-      serviceType: "Guide Wires",
+      name: "Accessories for Interventional Cardiology",
+      serviceType: "Accessories for Interventional Cardiology",
       description:
-        "High-quality guide wires for interventional procedures and device support.",
+        "Supply and technical support for accessories for interventional cardiology devices.",
       provider: { "@id": "https://rhythmmedicalint.com/#organization" },
-      url: "https://rhythmmedicalint.com/services#wires",
-    },
-    {
-      "@type": "Service",
-      "@id": "https://rhythmmedicalint.com/services/heart-devices",
-      name: "Heart Devices",
-      serviceType: "Heart Devices",
-      description:
-        "Medical devices for cardiac care including pacemakers and monitoring equipment.",
-      provider: { "@id": "https://rhythmmedicalint.com/#organization" },
-      url: "https://rhythmmedicalint.com/services#heart-devices",
+      url: "https://rhythmmedicalint.com/services#accessories-for-interventional-cardiology",
     },
   ],
 };
 
 export default function ServicesPage() {
   return (
-    <div className="w-full">
-      <ServiceSection />
+    <div className="w-full bg-blue-50">
+      <PageHeader
+        title="Our Services"
+        description="Explore the Medical Services Offered by Rhythm Medical International"
+      />
+      {serviceList &&
+        serviceList.map((item, index) => {
+          return (
+            <SectionComponent
+              key={index}
+              sectionTitle={item.title}
+              sectionContent={item.description}
+              sectionImage={item.imageUrl}
+              isReversed={index % 2 != 0}
+            />
+          );
+        })}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}

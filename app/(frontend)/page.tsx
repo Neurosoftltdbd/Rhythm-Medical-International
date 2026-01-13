@@ -2,9 +2,11 @@ import AchivementSection from "@/components/home/AchivementSection";
 import HeroSection from "@/components/home/HeroSection";
 import MissionSection from "@/components/home/MissionSection";
 import OurTeamSection from "@/components/home/OurTeamSection";
+import PartnerSection from "@/components/home/PartnerSection";
 import ServiceSection from "@/components/home/ServiceSection";
 import TestimonialSection from "@/components/home/TestimonialSection";
 import VissionSection from "@/components/home/VissionSection";
+import { faqList } from "@/data/data";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -25,17 +27,6 @@ export const metadata: Metadata = {
   authors: [
     { name: "Rhythm Medical International", url: "https://rhythmmedical.com" },
   ],
-  robots: "index, follow",
-  icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "Rhythm Medical International",
-  },
   openGraph: {
     title: "Rhythm Medical International",
     description:
@@ -91,7 +82,7 @@ const schemaMarkup = {
         },
       ],
       description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
+        "Leading the Future of Medical Technology and Healthcare Solutions in Bangladesh.",
     },
     {
       "@type": "WebSite",
@@ -114,7 +105,7 @@ const schemaMarkup = {
       breadcrumb: { "@id": "https://rhythmmedicalint.com/#breadcrumb" },
       inLanguage: "en-US",
       description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
+        "Leading the Future of Medical Technology and Healthcare Solutions in Bangladesh.",
     },
     {
       "@type": "BreadcrumbList",
@@ -184,7 +175,7 @@ const schemaMarkup = {
       logo: "https://rhythmmedicalint.com/logo.png",
       image: "https://rhythmmedicalint.com/logo.png",
       description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
+        "Leading the Future of Medical Technology and Healthcare Solutions in Bangladesh.",
       address: {
         "@type": "PostalAddress",
         streetAddress:
@@ -202,7 +193,7 @@ const schemaMarkup = {
         "https://www.linkedin.com/company/rhythm-medical-international",
         "https://www.instagram.com/rhythmmedicalinternational",
       ],
-      priceRange: "1000-2000000 BDT",
+      priceRange: "1,000.00-20,00,000.00 BDT",
     },
     {
       "@type": "ContactPage",
@@ -211,7 +202,7 @@ const schemaMarkup = {
       inLanguage: "en-US",
       isPartOf: { "@id": "https://rhythmmedicalint.com/#website" },
       description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
+        "Leading the Future of Medical Technology and Healthcare Solutions in Bangladesh.",
       contactType: "customer service",
       contactOption: [
         {
@@ -230,7 +221,7 @@ const schemaMarkup = {
       url: "https://rhythmmedicalint.com",
       logo: "https://rhythmmedicalint.com/logo.png",
       description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
+        "Leading the Future of Medical Technology and Healthcare Solutions in Bangladesh.",
       address: {
         "@type": "PostalAddress",
         streetAddress:
@@ -248,7 +239,7 @@ const schemaMarkup = {
         "https://www.linkedin.com/company/rhythm-medical-international",
         "https://www.instagram.com/rhythmmedicalinternational",
       ],
-      priceRange: "1000-2000000 BDT",
+      priceRange: "1,000.00-20,00,000.00 BDT",
       image: "https://rhythmmedicalint.com/logo.png",
     },
     {
@@ -258,7 +249,7 @@ const schemaMarkup = {
       url: "https://rhythmmedicalint.com",
       logo: "https://rhythmmedicalint.com/logo.png",
       description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
+        "Leading the Future of Medical Technology and Healthcare Solutions in Bangladesh.",
       address: {
         "@type": "PostalAddress",
         streetAddress:
@@ -288,46 +279,14 @@ const schemaMarkup = {
       description:
         "Frequently Asked Questions about Rhythm Medical International",
       mainEntity: [
-        {
+        faqList.map((f) => ({
           "@type": "Question",
-          name: "Is Rhythm Medical International a Medical Service provider Company?",
+          name: f.question,
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes, Rhythm Medical International is a Medical Service provider Company.",
+            text: f.answer,
           },
-        },
-        {
-          "@type": "Question",
-          name: "How can I contact Rhythm Medical International?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "You can contact Rhythm Medical International by phone at +880 1819-227038 or email at rhythmmedicalint@gmail.com.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What are the services offered by Rhythm Medical International?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Rhythm Medical International offers a wide range of medical services, including pacemaker implantation, coronary stents, wires, heart devices, and medical equipment.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What is the location of Rhythm Medical International?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Rhythm Medical International is located in Dhaka, Bangladesh.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What is the contact information for Rhythm Medical International?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "You can contact Rhythm Medical International by phone at +880 1819-227038 or email at rhythmmedicalint@gmail.com.",
-          },
-        },
+        })),
       ],
     },
     {
@@ -373,6 +332,7 @@ export default function Home() {
       <OurTeamSection />
       <ServiceSection />
       <AchivementSection />
+      <PartnerSection />
       <TestimonialSection />
       <script
         type="application/ld+json"

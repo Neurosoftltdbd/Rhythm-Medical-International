@@ -1,3 +1,33 @@
+
+export const metadata = {
+  title: "Login",
+  description: "Login to your account",
+  openGraph: {
+    title: "Login",
+    description: "Login to your account",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    siteName: "Rhythm Medical International",
+  },
+  twitter: {
+    title: "Login",
+    description: "Login to your account",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    card: "summary_large_image",
+  },
+};
+
 export default function LoginPage() {
   return (
     <div className="w-full ">

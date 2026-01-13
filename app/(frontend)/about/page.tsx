@@ -1,4 +1,3 @@
-
 import AboutUsComponent from "@/components/AboutUsComponent";
 import PageHeader from "@/components/PageHeader";
 
@@ -33,6 +32,7 @@ export const metadata = {
     card: "summary_large_image",
   },
 };
+
 export default function AboutPage() {
   return (
     <div className="w-full bg-green-50">

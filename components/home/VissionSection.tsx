@@ -9,7 +9,7 @@ export default function VissionSection() {
           <div className="w-full md:w-6/12">
             <div>
               <Image
-                src="/vision-image.jpg"
+                src="/upload/vision-image.jpg"
                 alt="Rhythm Medical International"
                 width={1200}
                 height={1200}
@@ -19,8 +19,8 @@ export default function VissionSection() {
           </div>
           {/* Left: Mission */}
           <div className="w-full md:w-6/12">
-            <div className="flex gap-4 items-center">
-              <div className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-emerald-50 text-emerald-600">
+            <div className="flex gap-4 items-center animate-bounce">
+              <div className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-blue-300 text-emerald-600">
                 <Image
                   src="/vision.svg"
                   alt="Rhythm Medical International"

@@ -54,13 +54,13 @@ export default function ContactForm() {
         className="flex flex-col gap-4 w-full"
       >
         <motion.div variants={itemVariants}>
-          <h3 className="text-xl font-semibold">Contact Us</h3>
+          <h3 className="text-2xl font-bold">Contact Us</h3>
           <p>Please fill out the form below to send us a message.</p>
         </motion.div>
         <motion.div variants={itemVariants} className="flex flex-col gap-2">
           <label htmlFor="name">Name</label>
           <input
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 bg-gray-50 focus:outline-none focus:bg-white"
             type="text"
             id="name"
             name="name"
@@ -70,10 +70,10 @@ export default function ContactForm() {
             onChange={(e) => setMessages({ ...messages, name: e.target.value })}
           />
         </motion.div>
-        <motion.div variants={itemVariants} className="flex flex-col gap-2">
+        <motion.div variants={itemVariants} className="flex flex-col gap-1">
           <label htmlFor="phone">Phone</label>
           <input
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 bg-gray-50 focus:outline-none focus:bg-white"
             type="tel"
             id="phone"
             name="phone"
@@ -85,10 +85,10 @@ export default function ContactForm() {
             }
           />
         </motion.div>
-        <motion.div variants={itemVariants} className="flex flex-col gap-2">
+        <motion.div variants={itemVariants} className="flex flex-col gap-1">
           <label htmlFor="email">Email</label>
           <input
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 bg-gray-50 focus:outline-none focus:bg-white"
             type="email"
             id="email"
             name="email"
@@ -100,10 +100,10 @@ export default function ContactForm() {
             }
           />
         </motion.div>
-        <motion.div variants={itemVariants} className="flex flex-col gap-2">
+        <motion.div variants={itemVariants} className="flex flex-col gap-1">
           <label htmlFor="message">Message</label>
           <textarea
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 bg-gray-50 focus:outline-none focus:bg-white"
             id="message"
             name="message"
             required
@@ -122,8 +122,8 @@ export default function ContactForm() {
           className="flex gap-4 items-center justify-center text-blue-700 p-2 px-6 rounded cursor-pointer border border-blue-700 hover:bg-green-200 transition-all ease-in-out duration-500 w-fit mx-auto"
         >
           <Image
-            src="/send.png"
-            alt="Send"
+            src="/upload/send.png"
+            alt="Send icon"
             width={20}
             height={20}
             className=""

@@ -1,6 +1,38 @@
 import PageHeader from "@/components/PageHeader";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Terms and Conditions",
+  description:
+    "Welcome to our terms and conditions page where we explain how we collect and use your information.",
+  openGraph: {
+    title: "Terms and Conditions",
+    description:
+      "Welcome to our terms and conditions page where we explain how we collect and use your information.",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    siteName: "Rhythm Medical International",
+  },
+  twitter: {
+    title: "Terms and Conditions",
+    description:
+      "Welcome to our terms and conditions page where we explain how we collect and use your information.",
+    images: [
+      {
+        url: "https://rhythmmedicalinternational.com/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    card: "summary_large_image",
+  },
+};
+
 export default function terms() {
   return (
     <div className="w-full bg-green-50">

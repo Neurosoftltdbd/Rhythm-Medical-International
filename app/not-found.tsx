@@ -10,7 +10,6 @@ export default function NotFound() {
       <Navbar />
       <div className="w-full h-screen flex flex-col items-center justify-center gap-8">
         <Lottie animationData={notFoundAnimationData} />
-
         <Link
           className="hover:underline hover:text-green-800 transition-all ease-in-out duration-500"
           href="/"
