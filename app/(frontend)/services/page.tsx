@@ -4,17 +4,11 @@ import { serviceList } from "@/data/data";
 
 export const metadata = {
   title: "Our Services",
+    alternates: {
+    canonical: "/services",
+  },
   description:
     "Explore the Medical Services Offered by Rhythm Medical International",
-  keywords: [
-    "Rhythm Medical International Services",
-    "Medical Services",
-    "Pacemaker Implantation",
-    "Coronary Stents",
-    "Wires",
-    "Heart Devices",
-    "Medical Equipment",
-  ],
   authors: [
     { name: "Rhythm Medical International", url: "https://rhythmmedical.com" },
   ],
@@ -26,9 +20,9 @@ export const metadata = {
     siteName: "Rhythm Medical International",
     images: [
       {
-        url: "https://rhythmmedical.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     locale: "en-US",
@@ -41,9 +35,9 @@ export const metadata = {
       "Explore the Medical Services Offered by Rhythm Medical International",
     images: [
       {
-        url: "https://rhythmmedical.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
   },
@@ -51,31 +45,9 @@ export const metadata = {
 
 export const schemaMarkup = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://rhythmmedicalint.com/#organization",
-      name: "Rhythm Medical International",
-      url: "https://rhythmmedicalint.com",
-      logo: "https://rhythmmedicalint.com/logo.png",
-      sameAs: [
-        "https://www.facebook.com/rhythmmedicalinternational",
-        "https://www.twitter.com/rhythmmedical",
-        "https://www.linkedin.com/company/rhythm-medical-international",
-        "https://www.instagram.com/rhythmmedicalinternational",
-      ],
-      contactPoint: [
-        {
-          "@type": "ContactPoint",
-          telephone: "+880 1829-938427",
-          contactType: "customer service",
-          areaServed: "BD",
-          availableLanguage: ["English"],
-        },
-      ],
-      description:
-        "Leading the Future of Medical Technology and Healthcare Solutions",
-    },
+  "@type": "ItemList",
+  "@id": "https://rhythmmedicalint.com/services#service-list",
+  itemListElement: [
     {
       "@type": "Service",
       "@id": "https://rhythmmedicalint.com/services/pacemaker-implantation",

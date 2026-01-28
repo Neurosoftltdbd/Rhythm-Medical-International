@@ -3,6 +3,9 @@ import { faqList } from "@/data/data";
 
 export const metadata = {
   title: "Frequently Asked Questions (FAQ)",
+  alternates: {
+    canonical: "/faq",
+  },
   description:
     "Find answers to common questions about our services and offerings. We're here to help!",
   openGraph: {
@@ -11,9 +14,9 @@ export const metadata = {
       "Find answers to common questions about our services and offerings. We're here to help!",
     images: [
       {
-        url: "https://rhythmmedicalinternational.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     siteName: "Rhythm Medical International",
@@ -24,15 +27,33 @@ export const metadata = {
       "Find answers to common questions about our services and offerings. We're here to help!",
     images: [
       {
-        url: "https://rhythmmedicalinternational.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     card: "summary_large_image",
   },
 };
 
+const faqs = faqList.map((f) => ({
+  "@type": "Question",
+  name: f.question,
+  acceptedAnswer: {
+    "@type": "Answer",
+    text: f.answer,
+  },
+}));
+const schemaMarkup = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://rhythmmedicalint.com/#faqpage",
+  url: "https://rhythmmedicalint.com/faq",
+  inLanguage: "en-US",
+  isPartOf: { "@id": "https://rhythmmedicalint.com/#website" },
+  description: "Frequently Asked Questions about Rhythm Medical International",
+  mainEntity: faqs,
+};
 export default function faq() {
   return (
     <div className="w-full bg-green-50">
@@ -56,6 +77,10 @@ export default function faq() {
             })}
         </div>
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
     </div>
   );
 }

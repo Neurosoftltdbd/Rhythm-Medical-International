@@ -1,8 +1,10 @@
 import PageHeader from "@/components/PageHeader";
 
-
 export const metadata = {
   title: "Latest Blog",
+  alternates: {
+    canonical: "/blog",
+  },
   description:
     "Welcome to our blog page where we share the latest updates and insights.",
   openGraph: {
@@ -11,9 +13,9 @@ export const metadata = {
       "Welcome to our blog page where we share the latest updates and insights.",
     images: [
       {
-        url: "https://rhythmmedicalinternational.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     siteName: "Rhythm Medical International",
@@ -24,16 +26,14 @@ export const metadata = {
       "Welcome to our blog page where we share the latest updates and insights.",
     images: [
       {
-        url: "https://rhythmmedicalinternational.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     card: "summary_large_image",
   },
 };
-
-
 
 export default function blog() {
   return (

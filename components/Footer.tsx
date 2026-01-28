@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="w-full py-8 px-4 bg-blue-300 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-      <div className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto mb-4 gap-16">
+      <div className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto mb-4 gap-16 py-12">
         <div className="w-full md:w-1/3">
           <h3 className="text-xl font-bold mb-2">About</h3>
           <hr className="mb-4" />
@@ -49,7 +49,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
-      <div className="text-center text-gray-600 dark:text-gray-400 mt-8">
+      <div className="text-center text-gray-600 dark:text-gray-400 mt-8 mb-8 md:mb-0">
         <p className="text-center text-gray-600 dark:text-gray-400">
           &copy; {new Date().getFullYear()} Rhythm Medical International. All
           rights reserved.

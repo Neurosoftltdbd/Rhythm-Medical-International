@@ -2,12 +2,12 @@
 import { handShakeingAnimationData } from "@/data/animation/animationData";
 import Lottie from "lottie-react";
 import Image from "next/image";
-import PageHeader from "../PageHeader";
+import SectionHeader from "../SectionHeader";
 export default function ServiceSection() {
   return (
     <section className="w-full bg-blue-50 py-12">
       <div className="max-w-7xl mx-auto">
-        <PageHeader
+        <SectionHeader
           title="Our Services"
           description="We provide a wide range of medical services tailored to meet the
             needs of our patients and healthcare providers."

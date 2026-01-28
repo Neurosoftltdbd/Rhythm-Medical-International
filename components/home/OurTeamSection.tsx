@@ -1,33 +1,20 @@
 "use client";
 import { team } from "@/data/data";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SectionHeader from "../SectionHeader";
 
 export default function OurTeamSection() {
   return (
     <section className="w-full bg-green-100 py-20 dark:bg-gray-900 ">
       <div className="w-full max-w-7xl mx-auto items-center">
         <div className="py-8">
-          <motion.h2
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, ease: "easeInOut" }}
-            className="text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-2"
-          >
-            Our Team
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, ease: "easeInOut" }}
-            className="text-center mb-4 "
-          >
-            Meet the dedicated professionals who make Rhythm Medical
-            International a leader in healthcare innovation.
-          </motion.p>
+          <SectionHeader
+            title="Our Team"
+            description="Meet the dedicated professionals who make Rhythm Medical International a leader in healthcare innovation."
+          />
         </div>
         <div className="p-4 md:p-0">
           {/* <motion.div
@@ -92,7 +79,7 @@ export default function OurTeamSection() {
                       {member.name}
                     </h3>
                     <div className="text-sm">
-                      <p className="text-gray-600">{member.role}</p>
+                      <p className="text-gray-600">{member.designation}</p>
                       <p className="text-gray-600">{member.phone}</p>
                       <p className="text-gray-600">{member.email}</p>
                     </div>

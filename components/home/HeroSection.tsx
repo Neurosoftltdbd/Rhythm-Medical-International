@@ -25,9 +25,9 @@ export default function HeroSection() {
             transition={{ duration: 1.0, ease: "easeInOut" }}
             className="w-full lg:w-1/2 p-4 md:p-0 flex flex-col items-start"
           >
-            <h2 className="text-5xl md:text-6xl font-extrabold text-blue-700 leading-tight font-serif italic font-playfair">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-blue-700 leading-tight font-serif italic font-playfair">
               Rhythm Medical International
-            </h2>
+            </h1>
 
             <p className="mt-4 text-lg text-slate-600 font-merriweather italic">
               Leading the Future of Medical Technology and Healthcare Solutions.

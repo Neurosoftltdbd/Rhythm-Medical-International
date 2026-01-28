@@ -3,16 +3,18 @@ import { partnerList } from "@/data/data";
 import Image from "next/image";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PageHeader from "../PageHeader";
 
 export default function PartnerSection() {
   return (
-    <section className="w-full bg-blue-50 py-4">
-      <div className="w-full max-w-7xl mx-auto py-12 px-4 md:px-0">
-        <PageHeader
-          title="Our Partners"
-          description="We are committed to excellence in health care, driven by a passion for cardiac care and innovation."
-        />
+    <section className="w-full bg-blue-100 py-30">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-0">
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <h2 className="text-3xl font-bold text-center">Our Partners</h2>
+          <p>
+            We are committed to excellence in health care, driven by a passion
+            for cardiac care and innovation.
+          </p>
+        </div>
         <div className="flex gap-8 p-4 md:p-0 py-2">
           <Swiper
             spaceBetween={50}
@@ -28,7 +30,7 @@ export default function PartnerSection() {
             {partnerList &&
               partnerList.map((item, index) => (
                 <SwiperSlide key={index} className="my-8">
-                  <div className="flex flex-col items-center gap-4 shadow-lg rounded-lg p-4">
+                  <div className="flex flex-col items-center gap-4 shadow-lg rounded-lg p-4 bg-blue-50">
                     <Image
                       src={item.imageUrl}
                       alt={item.name}

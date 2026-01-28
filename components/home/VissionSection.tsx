@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function VissionSection() {
   return (
-    <section className="bg-blue-100 dark:bg-gray-900 py-20">
+    <section className="bg-blue-100 dark:bg-gray-900 py-30">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col-reverse md:flex-row gap-12 items-center">
           {/* Right: Vision */}

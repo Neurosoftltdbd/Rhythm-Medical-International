@@ -2,6 +2,9 @@ import PageHeader from "@/components/PageHeader";
 
 export const metadata = {
   title: "Privacy Policy",
+    alternates: {
+    canonical: "/privacy-policy",
+  },
   description:
     "Carefully review our privacy policy to understand how we handle your information.",
   openGraph: {
@@ -10,9 +13,9 @@ export const metadata = {
       "Carefully review our privacy policy to understand how we handle your information.",
     images: [
       {
-        url: "https://rhythmmedicalinternational.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     siteName: "Rhythm Medical International",
@@ -23,9 +26,9 @@ export const metadata = {
       "Carefully review our privacy policy to understand how we handle your information.",
     images: [
       {
-        url: "https://rhythmmedicalinternational.com/logo.png",
-        width: 800,
-        height: 600,
+        url: "/upload/Banner.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     card: "summary_large_image",

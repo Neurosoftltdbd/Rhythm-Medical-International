@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function MissionSection() {
   return (
-    <section className="bg-green-100 dark:bg-gray-900 py-20">
+    <section className="bg-green-100 dark:bg-gray-900 py-30">
       <div className="max-w-7xl mx-auto px-6 lg:px-0">
         <div className="flex flex-col md:flex-row gap-12 items-center">
           {/* Left: Mission */}

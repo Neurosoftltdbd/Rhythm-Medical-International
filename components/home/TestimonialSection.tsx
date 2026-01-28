@@ -8,8 +8,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function TestimonialSection() {
   return (
-    <section className="w-full bg-gray-100 py-12">
-      <div className="w-full max-w-7xl mx-auto py-12 px-4 md:px-0">
+    <section className="w-full bg-gray-100 py-30">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-0">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold">Testimonials</h2>
           <p className="mt-2 text-gray-600 max-w-2xl mx-auto">
